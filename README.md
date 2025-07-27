@@ -1,6 +1,6 @@
 # CheckIn24
 
-Offline, Material You, check in client for 24 Hour Fitness gym memberships 
+Offline, Material You, check in client for 24 Hour Fitness gym memberships built with Jetpack Compose
 
 ## About
 
