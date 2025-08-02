@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -83,6 +84,7 @@ fun QrScreen(mbrID: String, modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Let's make today count.",
+            fontWeight = FontWeight.Bold,
             fontSize = 26.sp,
             modifier = modifier
                 .padding(bottom = 1.dp)
@@ -122,6 +124,7 @@ fun QrScreen(mbrID: String, modifier: Modifier = Modifier) {
                 }
                 Text(
                     text = mbrID,
+                    fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
                     modifier = modifier
                         .padding(top = 18.dp)
