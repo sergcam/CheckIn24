@@ -45,7 +45,7 @@ data class QrData(
         DT = DT,
         TP = "P",
         OS = "Android",
-        AP = "1.78.1",
+        AP = "1.78.2", // last updated 8/2/25
         DI = "00000000-0000-0000-0000-000000000000"
     )
 }
