@@ -46,8 +46,6 @@ class MainActivity : ComponentActivity() {
                     factory = CheckInViewModel.Factory
                 )
             val uiState = viewModel.uiState.collectAsState().value
-            if (uiState.theme == "") viewModel.setTheme("system")
-            if (uiState.colorScheme == "") viewModel.setColorScheme("dynamic")
             CheckIn24Theme(
                 darkTheme = if (uiState.theme == "dark") true else if (uiState.theme == "light") false else isSystemInDarkTheme()
             ) {
