@@ -30,26 +30,50 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.secam.checkin24.composeqr.QrCodeView
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import dev.secam.checkin24.R
+import dev.secam.checkin24.composeqr.QrCodeView
 import dev.secam.checkin24.data.QrData
-//import dev.secam.checkin24.ui.theme.CheckIn24Theme
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrScreen(mbrID: String, modifier: Modifier = Modifier) {
     val logo = painterResource(R.drawable.logo_24f)
-    val timestamp = System.currentTimeMillis()
-    val json = Json.encodeToString(QrData(MB = mbrID, DT = timestamp))
+    var timestamp by remember { mutableLongStateOf(System.currentTimeMillis()) }
+    var json by remember { mutableStateOf(Json.encodeToString(QrData(MB = mbrID, DT = timestamp))) }
+    var isActive by remember { mutableStateOf(true) }
 
+    LifecycleResumeEffect(Unit) {
+        isActive = true
+        onPauseOrDispose {
+            isActive = false
+        }
+    }
+    //update qr code if outdated
+    if(isActive){
+        LaunchedEffect(json) {
+            while ((System.currentTimeMillis() - timestamp) < 300000) { // 5 minutes
+                delay(5000) // check time every 5 sec
+            }
+            timestamp = System.currentTimeMillis()
+            json = Json.encodeToString(QrData(MB = mbrID, DT = timestamp))
+
+        }
+    }
     Column(
         modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
