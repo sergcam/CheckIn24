@@ -36,7 +36,9 @@ data class UserPreferences(
     val colorScheme: String,
     val qrOnOpen: Boolean,
     val qrMaxBrightness: Boolean,
-    val pureBlack: Boolean
+    val pureBlack: Boolean,
+    val useNtp: Boolean,
+    val ntpServer: String
 )
 
 class PreferencesRepo(private val dataStore: DataStore<Preferences>) {
@@ -48,6 +50,8 @@ class PreferencesRepo(private val dataStore: DataStore<Preferences>) {
         val QR_ON_OPEN = booleanPreferencesKey("qr_on_open")
         val QR_MAX_BRIGHTNESS = booleanPreferencesKey("qr_max_brightness")
         val PURE_BLACK = booleanPreferencesKey("pure_black")
+        val USE_NTP = booleanPreferencesKey("use_ntp")
+        val NTP_SERVER = stringPreferencesKey("ntp_server")
         const val TAG = "PreferencesRepo"
     }
 
@@ -64,11 +68,13 @@ class PreferencesRepo(private val dataStore: DataStore<Preferences>) {
             Log.d(TAG, "prefs read")
             val mbrId = preferences[MBR_ID] ?: ""
             val firstName = preferences[FIRST_NAME] ?: ""
-            val theme = preferences[THEME] ?: ""
-            val colorScheme = preferences[COLOR_SCHEME] ?: ""
+            val theme = preferences[THEME] ?: "system"
+            val colorScheme = preferences[COLOR_SCHEME] ?: "dynamic"
             val qrOnOpen = preferences[QR_ON_OPEN] ?: false
             val qrMaxBrightness = preferences[QR_MAX_BRIGHTNESS] ?: true
             val pureBlack = preferences[PURE_BLACK] ?: false
+            val useNtp = preferences[USE_NTP] ?: false
+            val ntpServer = preferences[NTP_SERVER] ?: "pool.ntp.org"
             UserPreferences(
                 mbrId = mbrId,
                 firstName = firstName,
@@ -76,7 +82,9 @@ class PreferencesRepo(private val dataStore: DataStore<Preferences>) {
                 colorScheme = colorScheme,
                 qrOnOpen = qrOnOpen,
                 qrMaxBrightness = qrMaxBrightness,
-                pureBlack = pureBlack
+                pureBlack = pureBlack,
+                useNtp = useNtp,
+                ntpServer = ntpServer
             )
 
         }
@@ -121,6 +129,17 @@ class PreferencesRepo(private val dataStore: DataStore<Preferences>) {
     suspend fun savePureBlackPref(pureBlack: Boolean) {
         dataStore.edit { preferences ->
             preferences[PURE_BLACK] = pureBlack
+        }
+    }
+
+    suspend fun saveNtpPref(useNtp: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[USE_NTP] = useNtp
+        }
+    }
+    suspend fun saveNtpServ(ntpServer: String) {
+        dataStore.edit { preferences ->
+            preferences[NTP_SERVER] = ntpServer
         }
     }
 }

@@ -51,6 +51,8 @@ class CheckInViewModel(
             qrOnOpen = userPreferences.qrOnOpen,
             qrMaxBrightness = userPreferences.qrMaxBrightness,
             pureBlack = userPreferences.pureBlack,
+            useNtp = userPreferences.useNtp,
+            ntpServer = userPreferences.ntpServer,
             qrOpened = checkInUiState.qrOpened,
             prefsRead = true
         )
@@ -112,6 +114,16 @@ class CheckInViewModel(
             preferencesRepo.savePureBlackPref(pureBlack)
         }
     }
+    fun setUseNtp(useNtp: Boolean) {
+        viewModelScope.launch {
+            preferencesRepo.saveNtpPref(useNtp)
+        }
+    }
+    fun setNtpServer(ntpServer: String) {
+        viewModelScope.launch {
+            preferencesRepo.saveNtpServ(ntpServer)
+        }
+    }
 
     fun setQrOpened(qrOpened: Boolean) {
         _uiState.update { currentState ->
@@ -131,6 +143,8 @@ data class CheckInUiState(
     val qrOnOpen: Boolean = false,
     val qrMaxBrightness: Boolean = false,
     val pureBlack: Boolean = false,
+    val useNtp: Boolean = false,
+    val ntpServer: String = "",
     val prefsRead: Boolean = false,
 
     // current session

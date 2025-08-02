@@ -54,6 +54,8 @@ fun CheckInApp(
     val qrOnOpen = uiState.qrOnOpen
     val qrMaxBrightness = uiState.qrMaxBrightness
     val pureBlack = uiState.pureBlack
+    val useNtp = uiState.useNtp
+    val ntpServer = uiState.ntpServer
     val qrOpened = uiState.qrOpened
     val prefsRead = uiState.prefsRead
 
@@ -126,6 +128,8 @@ fun CheckInApp(
                 qrOnOpen = qrOnOpen,
                 qrMaxBrightness = qrMaxBrightness,
                 pureBlack = pureBlack,
+                useNtp = useNtp,
+                ntpServer = ntpServer,
                 viewModel = viewModel,
                 navController = navController
             )

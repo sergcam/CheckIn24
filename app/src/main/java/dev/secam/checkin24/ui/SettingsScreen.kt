@@ -17,6 +17,9 @@
 
 package dev.secam.checkin24.ui
 
+//import androidx.compose.ui.tooling.preview.Preview
+//import androidx.lifecycle.viewmodel.compose.viewModel
+//import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,6 +40,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -58,15 +62,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
-//import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-//import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.R
+
 //import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,6 +81,8 @@ fun SettingsScreen(
     qrOnOpen: Boolean,
     qrMaxBrightness: Boolean,
     pureBlack: Boolean,
+    useNtp: Boolean,
+    ntpServer: String,
     navController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: CheckInViewModel
@@ -187,6 +191,25 @@ fun SettingsScreen(
                 currentState = pureBlack,
                 onToggle = viewModel::setPureBlack
             )
+            ToggleSettingsItem(
+                headlineContent = "Use Internet Time",
+                currentState = useNtp,
+                onToggle = viewModel::setUseNtp
+            )
+            DialogSettingsItem(
+                headlineContent = "Choose NTP Server",
+                supportingContent = "pool.ntp.org",
+                which = "Ntp",
+                leadingContent = {
+                    Icon(
+                        painter = painterResource(R.drawable.outline_access_time_24),
+                        contentDescription = null
+                    )
+                },
+                ntpServer = ntpServer,
+                enabled = useNtp,
+                viewModel = viewModel
+            )
 
             ListItem(
                 headlineContent = { Text("About") },
@@ -219,6 +242,8 @@ fun DialogSettingsItem(
     firstName: String = "",
     theme: String = "",
     colorScheme: String = "",
+    ntpServer: String = "",
+    enabled: Boolean = true,
     viewModel: CheckInViewModel
 ) {
     var showDialog by remember { mutableStateOf(false) }
@@ -226,8 +251,13 @@ fun DialogSettingsItem(
         headlineContent = { Text(headlineContent) },
         supportingContent = { Text(supportingContent) },
         leadingContent = leadingContent,
+        colors = if (enabled) ListItemDefaults.colors() else ListItemDefaults.colors(
+            headlineColor = MaterialTheme.colorScheme.outline,
+            supportingColor = MaterialTheme.colorScheme.outlineVariant,
+            leadingIconColor = MaterialTheme.colorScheme.outline
+        ),
         modifier = modifier
-            .clickable(enabled = true, onClick = {
+            .clickable(enabled = enabled, onClick = {
                 showDialog = true
             })
             .fillMaxWidth()
@@ -239,6 +269,7 @@ fun DialogSettingsItem(
             firstName,
             theme,
             colorScheme,
+            ntpServer,
             which,
             viewModel
         ) { showDialog = false }
@@ -283,6 +314,7 @@ fun DialogPicker(
     firstName: String = "",
     theme: String = "",
     colorScheme: String = "",
+    ntpServer: String = "",
     which: String,
     viewModel: CheckInViewModel,
     onDismissRequest: () -> Unit
@@ -291,6 +323,7 @@ fun DialogPicker(
         "UserInfo" -> UserInfoDialog(mbrId, firstName, viewModel = viewModel, onDismissRequest)
         "Theme" -> ThemeDialog(theme, viewModel, onDismissRequest)
         "ColorScheme" -> ColorSchemeDialog(colorScheme, viewModel, onDismissRequest)
+        "Ntp" -> NtpDialog(ntpServer, viewModel, onDismissRequest)
     }
 
 
@@ -360,7 +393,7 @@ fun UserInfoDialog(
                             onDismissRequest()
                         },
                     ) {
-                        Text("Edit")
+                        Text("Save")
                     }
                 }
             }
@@ -525,7 +558,70 @@ fun ColorSchemeDialog(
     }
 }
 
+@Composable
+fun NtpDialog(
+    ntpServer: String,
+    viewModel: CheckInViewModel,
+    onDismissRequest: () -> Unit
+) {
+    val ntpFieldState = rememberTextFieldState(ntpServer)
 
+    Dialog(onDismissRequest = { onDismissRequest() }) {
+        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(.25f)
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier.padding(horizontal = 26.dp)
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier.padding(top = 20.dp)
+                ) {
+                    Text(
+                        text = "Edit NTP Server",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(bottom = 26.dp),
+
+                        )
+                    OutlinedTextField(
+                        state = ntpFieldState,
+                        label = { Text("NTP Server") },
+                        modifier = Modifier.padding(bottom = 6.dp),
+                    )
+
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(top = 20.dp, bottom = 14.dp)
+                ) {
+                    TextButton(
+                        onClick = { onDismissRequest() },
+
+                        ) {
+                        Text("Cancel")
+                    }
+                    TextButton(
+                        onClick = {
+                            (viewModel::setNtpServer)(ntpFieldState.text as String)
+                            onDismissRequest()
+                        },
+                    ) {
+                        Text("Save")
+                    }
+                }
+            }
+        }
+
+    }
+}
 //@Preview(showBackground = true)
 //@Composable
 //fun SettingsPreview() {
