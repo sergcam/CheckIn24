@@ -1,4 +1,4 @@
-package dev.secam.checkin24.composeqr
+package com.lightspark.composeqr
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

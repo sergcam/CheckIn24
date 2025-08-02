@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import dev.secam.checkin24.R
-import dev.secam.checkin24.composeqr.QrCodeView
+import com.lightspark.composeqr.QrCodeView
 import dev.secam.checkin24.data.QrData
 import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json

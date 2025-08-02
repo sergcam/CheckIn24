@@ -1,4 +1,4 @@
-package dev.secam.checkin24.composeqr
+package com.lightspark.composeqr
 
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
