@@ -37,6 +37,10 @@ The data written in the check in qr code on the official 24go app is a JSON obje
 
 CheckIn24 uses a user provided member number stored locally on the device to generate a valid QR code which can be used to check in to the gym
 
+## Installation
+
+Head over to the [Releases](https://github.com/sergcam/CheckIn24/releases) section and download the latest APK. Might add to F-Droid in the future
+
 ## Disclaimer 
 
 This application comes with no guarantee of functionality or adherence to 24 Hour Fitness policy. It works for me. It might work for you. Use at your own discretion.
