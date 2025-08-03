@@ -198,7 +198,7 @@ fun SettingsScreen(
             )
             DialogSettingsItem(
                 headlineContent = "Choose NTP Server",
-                supportingContent = "pool.ntp.org",
+                supportingContent = ntpServer,
                 which = "Ntp",
                 leadingContent = {
                     Icon(
