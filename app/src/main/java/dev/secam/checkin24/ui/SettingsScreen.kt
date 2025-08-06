@@ -62,12 +62,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.R
+import dev.secam.checkin24.ui.components.CheckInTopBar
+import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
 //import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
@@ -89,22 +94,9 @@ fun SettingsScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Settings") },
-                colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.background,
-                    ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "back button"
-                        )
-                    }
-                },
-                modifier = modifier,
-            )
+            CheckInTopBar(
+                title = "Settings",
+            ) { navController.navigateUp() }
         },
         modifier = modifier
     ) { contentPadding ->
@@ -248,7 +240,7 @@ fun DialogSettingsItem(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     ListItem(
-        headlineContent = { Text(headlineContent) },
+        headlineContent = { Text(headlineContent,fontWeight = FontWeight.Medium) },
         supportingContent = { Text(supportingContent) },
         leadingContent = leadingContent,
         colors = if (enabled) ListItemDefaults.colors() else ListItemDefaults.colors(
@@ -286,7 +278,7 @@ fun ToggleSettingsItem(
 ) {
     var checked by remember { mutableStateOf(currentState) }
     ListItem(
-        headlineContent = { Text(headlineContent) },
+        headlineContent = { Text(headlineContent,fontWeight = FontWeight.Medium) },
         supportingContent = {
             if (supportingContent != null) {
                 Text(supportingContent)
@@ -622,19 +614,3 @@ fun NtpDialog(
 
     }
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun SettingsPreview() {
-//    CheckIn24Theme {
-//        SettingsScreen(
-//            "", "", "System", "Dynamic",
-//            qrOnOpen = false,
-//            qrMaxBrightness = true,
-//            pureBlack = false,
-//            navController = rememberNavController(),
-//            viewModel = viewModel()
-//        )
-////        ThemeDialog {  }
-////        AboutDialog {  }
-//    }
-//}
