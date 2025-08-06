@@ -30,15 +30,15 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 
 data class UserPreferences(
-    val mbrId: String,
-    val firstName: String,
-    val theme: String,
-    val colorScheme: String,
-    val qrOnOpen: Boolean,
-    val qrMaxBrightness: Boolean,
-    val pureBlack: Boolean,
-    val useNtp: Boolean,
-    val ntpServer: String
+    val mbrId: String = "",
+    val firstName: String = "",
+    val theme: String = "",
+    val colorScheme: String = "",
+    val qrOnOpen: Boolean = false,
+    val qrMaxBrightness: Boolean = false,
+    val pureBlack: Boolean = false,
+    val useNtp: Boolean = false,
+    val ntpServer: String = ""
 )
 
 class PreferencesRepo(private val dataStore: DataStore<Preferences>) {

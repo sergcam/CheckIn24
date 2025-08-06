@@ -6,8 +6,10 @@ datastorePreferences = "1.1.7"
 kotlin = "2.2.0"
 kotlinxSerializationJson = "1.9.0"
 composeBom = "2025.07.00"
-material3AdaptiveNavigationSuite = "1.4.0-alpha18"
-navigationCompose = "2.9.2"
+material3AdaptiveNavigationSuite = "1.4.0-beta01"
+navigationCompose = "2.9.3"
+hilt = "2.57"
+ksp = "2.2.0-2.0.2"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -19,6 +21,7 @@ google-zxing = { module = "com.google.zxing:core", version.ref = "zxing" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 [plugins]
@@ -26,3 +29,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = {id = "com.android.library", version.ref = "agp"}
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}

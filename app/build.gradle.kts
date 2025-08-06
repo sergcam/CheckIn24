@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.hilt.android)
     kotlin("plugin.serialization") version "2.2.0"
 }
 
@@ -62,6 +64,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.hilt.android)
+    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
 
     debugImplementation(libs.androidx.ui.tooling)
 }

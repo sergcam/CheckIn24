@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.secam.checkin24.ui.greeting.GreetingScreen
 
 enum class CheckInScreen() {
     Greeting(),
@@ -92,8 +93,7 @@ fun CheckInApp(
                 qrOnOpen,
                 qrOpened,
                 qrMaxBrightness,
-                prefsRead,
-                navController
+                navController,
             ) { viewModel.setQrOpened(true) }
         }
         composable(
