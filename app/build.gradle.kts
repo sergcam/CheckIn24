@@ -36,6 +36,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+            versionNameSuffix = "-debug"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -65,7 +70,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.hilt.android)
-    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    ksp(libs.hilt.android.compiler)
 
     debugImplementation(libs.androidx.ui.tooling)
 }
