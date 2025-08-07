@@ -2,7 +2,6 @@
 <resources>
 
     <style name="Theme.CheckIn24" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowSplashScreenBackground">#121212</item>
-<!--        <item name="android:windowBackground">#121212</item>-->
+        <item name="android:windowSplashScreenBackground">@android:color/system_background_light</item>
     </style>
 </resources>
