@@ -57,8 +57,6 @@ fun CheckInApp(
     val pureBlack = uiState.pureBlack
     val useNtp = uiState.useNtp
     val ntpServer = uiState.ntpServer
-    val qrOpened = uiState.qrOpened
-    val prefsRead = uiState.prefsRead
 
     NavHost(
         navController = navController,
@@ -87,14 +85,7 @@ fun CheckInApp(
                     AnimatedContentTransitionScope.SlideDirection.End, tween(700)
                 )
             }) {
-            GreetingScreen(
-                mbrId,
-                firstName,
-                qrOnOpen,
-                qrOpened,
-                qrMaxBrightness,
-                navController,
-            ) { viewModel.setQrOpened(true) }
+            GreetingScreen(navController)
         }
         composable(
             route = CheckInScreen.Settings.name,
