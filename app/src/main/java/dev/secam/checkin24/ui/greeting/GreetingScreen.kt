@@ -17,59 +17,50 @@
 
 package dev.secam.checkin24.ui.greeting
 
-import android.accessibilityservice.GestureDescription
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-//import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.CheckInScreen
 import dev.secam.checkin24.ui.components.CheckInTopBar
-import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
-@OptIn(ExperimentalMaterial3Api::class )
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GreetingScreen(
-    mbrId: String,
-    firstName: String,
-    qrOnOpen: Boolean,
-    qrOpened: Boolean,
-    qrMaxBrightness: Boolean,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    setQrOpened: () -> Unit
+    viewModel: GreetingViewModel = hiltViewModel(),
 ) {
+    // ui state
+    val uiState = viewModel.uiState.collectAsState().value
+    val qrOpened = uiState.qrOpened
+    val showBottomSheet = uiState.showBottomSheet
 
-    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
-    if(qrOnOpen && !qrOpened) showBottomSheet = true
+    // user preferences
+    val prefs = viewModel.prefState.collectAsState().value
+    val mbrId = prefs.mbrId
+    val firstName = prefs.firstName
+    val qrOnOpen = prefs.qrOnOpen
+    val qrMaxBrightness = prefs.qrMaxBrightness
+
+    if (qrOnOpen && !qrOpened) viewModel.setShowBottomSheet(true)
 
     Scaffold(
         topBar = {
@@ -78,7 +69,7 @@ fun GreetingScreen(
                 actionIcon = painterResource(R.drawable.outline_settings_24),
                 contentDescription = "settings button"
             ) {
-                setQrOpened()
+                viewModel.setQrOpened()
                 navController.navigate(CheckInScreen.Settings.name)
             }
         },
@@ -92,72 +83,88 @@ fun GreetingScreen(
                     )
                 },
                 onClick = {
-                    showBottomSheet = true
+                    viewModel.setShowBottomSheet(true)
                 }
             )
         }
     ) { contentPadding ->
-
         Column(
-            modifier = modifier.padding(contentPadding)
+            modifier = modifier
+                .padding(contentPadding)
+                .padding(horizontal = 16.dp, vertical = 0.dp)
         ) {
-            Column (
-                modifier = modifier.padding(horizontal = 16.dp, vertical = 0.dp)
-            ) {
-                Text(
-                    text = "Let's Go, $firstName",
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = modifier
-                        .padding(top = 54.dp, bottom = 20.dp)
-                )
-                CheckInTracker()
-
-                Button(
-                    onClick = { },
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                ) {
-                    Text("Check In History")
-                }
-                Button(
-                    onClick = { },
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                ) {
-                    Text("Manage Account ")
-                    Icon(
-                        painter = painterResource(R.drawable.open_in_new_24px),
-                        contentDescription = null,
-                        modifier = modifier
-                            .size(20.dp)
-                    )
-                }
-            }
-
+            GreetingText(
+                firstName = firstName,
+                modifier = modifier
+                    .padding(top = 54.dp, bottom = 20.dp)
+            )
+            CheckInTracker()
+            GreetingButton(
+                text = "Check In History",
+                modifier = modifier
+                    .padding(top = 16.dp)
+            ) { }
+            GreetingButton(
+                text = "Manage Account",
+                icon = painterResource(R.drawable.open_in_new_24px),
+                iconDesc = null,
+                modifier = modifier
+                    .padding(top = 16.dp)
+            ) { }
         }
         if (showBottomSheet) {
-            setQrOpened()
-            QrScreen(mbrId, qrMaxBrightness) { showBottomSheet = false }
+            viewModel.setQrOpened()
+            QrScreen(mbrId, qrMaxBrightness) { viewModel.setShowBottomSheet(false) }
         }
     }
 }
 
-
-
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    CheckIn24Theme {
-        GreetingScreen(
-            "1", "Sergio",
-            qrOpened = false,
-            navController = rememberNavController(),
-            qrOnOpen = false,
-            qrMaxBrightness = false,
-            setQrOpened = { }
+fun GreetingText(firstName: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Let's Go, $firstName",
+        fontSize = 26.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun GreetingButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = text
+        )
+    }
+}
+
+@Composable
+fun GreetingButton(
+    text: String,
+    icon: Painter,
+    iconDesc: String?,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier
+                .padding(end = 4.dp)
+        )
+        Icon(
+            painter = icon,
+            contentDescription = iconDesc,
+            modifier = Modifier
+                .size(20.dp)
         )
     }
 }
