@@ -30,11 +30,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import dev.secam.checkin24.ui.CheckInApp
 import dev.secam.checkin24.ui.CheckInViewModel
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
 
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {

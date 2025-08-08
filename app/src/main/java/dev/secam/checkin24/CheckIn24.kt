@@ -18,22 +18,16 @@
 package dev.secam.checkin24
 
 import android.app.Application
-import android.content.Context
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.datastore.core.DataStore
+import dagger.hilt.android.HiltAndroidApp
 import dev.secam.checkin24.data.PreferencesRepo
+import javax.inject.Inject
 
-private const val USER_PREFERENCES_NAME = "user_preferences"
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = USER_PREFERENCES_NAME
-)
-
+@HiltAndroidApp
 class CheckIn24: Application() {
+    @Inject
     lateinit var preferencesRepo: PreferencesRepo
 
     override fun onCreate() {
         super.onCreate()
-        preferencesRepo = PreferencesRepo(dataStore)
     }
 }
