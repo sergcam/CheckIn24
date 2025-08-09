@@ -21,8 +21,8 @@ android {
         applicationId = "dev.secam.checkin24"
         minSdk = 28
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.2.0-alpha"
+        versionCode = 3
+        versionName = "0.3.0-alpha"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,7 +72,8 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.android.compiler)
 
-    debugImplementation(libs.androidx.ui.tooling)
+
 }
