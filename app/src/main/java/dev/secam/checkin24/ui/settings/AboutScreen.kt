@@ -28,11 +28,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -68,7 +63,6 @@ import androidx.navigation.NavHostController
 import dev.secam.checkin24.R
 import dev.secam.checkin24.util.getAppVersion
 
-//import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,7 +77,7 @@ fun AboutScreen(navController: NavHostController, modifier: Modifier = Modifier)
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            painter = painterResource(R.drawable.arrow_back_24px),
                             contentDescription = "back button"
                         )
                     }
@@ -131,7 +125,7 @@ fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
 
                 leadingContent = {
                     Icon(
-                        imageVector = Icons.Outlined.Person,
+                        painter = painterResource(R.drawable.person_24px),
                         contentDescription = null
                     )
                 },
@@ -163,7 +157,7 @@ fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 supportingContent = { Text("secam.dev") },
                 leadingContent = {
                     Icon(
-                        painter = painterResource(R.drawable.outline_insert_link_24),
+                        painter = painterResource(R.drawable.insert_link_24px),
                         contentDescription = null
                     )
                 },
@@ -180,7 +174,7 @@ fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 supportingContent = { Text("sergio@secam.dev") },
                 leadingContent = {
                     Icon(
-                        imageVector = Icons.Outlined.Email,
+                        painter = painterResource(R.drawable.mail_24px),
                         contentDescription = null
                     )
                 },
@@ -235,7 +229,7 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 },
                 leadingContent = {
                     Icon(
-                        imageVector = Icons.Outlined.Info,
+                        painter = painterResource(R.drawable.info_24px),
                         contentDescription = null
                     )
                 },
@@ -248,7 +242,7 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 headlineContent = { Text("Source Code") },
                 leadingContent = {
                     Icon(
-                        painter = painterResource(R.drawable.outline_code_24),
+                        painter = painterResource(R.drawable.code_24px),
                         contentDescription = null
                     )
                 },
@@ -264,7 +258,7 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 supportingContent = { Text("GPL v3") },
                 leadingContent = {
                     Icon(
-                        painter = painterResource(R.drawable.outline_balance_24),
+                        painter = painterResource(R.drawable.balance_24px),
                         contentDescription = null
                     )
                 },

@@ -29,9 +29,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
@@ -47,9 +44,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
 import java.time.LocalDate
 
@@ -94,8 +93,8 @@ fun CheckInTracker(modifier: Modifier = Modifier) {
 @Composable
 fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) {
     var isToggled by remember { mutableStateOf(false) }
-    val iconChecked = Icons.Outlined.Check
-    val iconUnchecked = Icons.Outlined.Close
+    val iconChecked = painterResource(R.drawable.check_24px)
+    val iconUnchecked = painterResource(R.drawable.close_24px)
     val buttonContentPadding = PaddingValues(0.dp)
     val buttonPadding = PaddingValues(start = 5.dp, end = 5.dp, bottom = 5.dp)
     val buttonSize = 50.dp
@@ -125,7 +124,7 @@ fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) 
 
         ) {
             Icon(
-                imageVector = if (isToggled) iconChecked else iconUnchecked,
+                painter = if (isToggled) iconChecked else iconUnchecked,
                 contentDescription = if (isToggled) "Selected icon button" else "Unselected icon button."
             )
         }

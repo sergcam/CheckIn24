@@ -113,16 +113,16 @@ fun SettingsScreen(
                 headlineContent = "Theme",
                 supportingContent = theme.displayName,
                 icon = when (theme) {
-                    AppTheme.System -> painterResource(R.drawable.outline_brightness_6_24)
-                    AppTheme.Dark -> painterResource(R.drawable.outline_dark_mode_24)
-                    AppTheme.Light -> painterResource(R.drawable.outline_light_mode_24)
+                    AppTheme.System -> painterResource(R.drawable.brightness_6_24px)
+                    AppTheme.Dark -> painterResource(R.drawable.dark_mode_24px)
+                    AppTheme.Light -> painterResource(R.drawable.light_mode_24px)
                 }
             ) {viewModel.setShowThemeDialog(true)}
 
             SettingsItem(
                 headlineContent = "Color Scheme",
                 supportingContent = colorScheme.displayName,
-                icon = painterResource(R.drawable.outline_palette_24)
+                icon = painterResource(R.drawable.palette_24px)
             ) {viewModel.setShowColorSchemeDialog(true)}
 
             ToggleSettingsItem(
@@ -149,7 +149,7 @@ fun SettingsScreen(
             SettingsItem(
                 headlineContent = "Choose NTP Server",
                 supportingContent = ntpServer,
-                icon = painterResource(R.drawable.outline_access_time_24),
+                icon = painterResource(R.drawable.access_time_24px),
                 enabled = useNtp
             ) {viewModel.setShowNtpDialog(true)}
 

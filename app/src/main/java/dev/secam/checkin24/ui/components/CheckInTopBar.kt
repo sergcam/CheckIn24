@@ -17,11 +17,8 @@
 
 package dev.secam.checkin24.ui.components
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,7 +34,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import dev.secam.checkin24.R
-import dev.secam.checkin24.ui.CheckInScreen
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
 // top bar with action icon
@@ -84,7 +80,7 @@ fun CheckInTopBar(title: String, modifier: Modifier = Modifier, onBack: () -> Un
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    painter = painterResource(R.drawable.arrow_back_24px),
                     contentDescription = "back button"
                 )
             }
@@ -127,7 +123,7 @@ fun TopBarPreview(){
             topBar = {
                 CheckInTopBar(
                     title = "CheckIn24",
-                    actionIcon = painterResource(R.drawable.outline_settings_24),
+                    actionIcon = painterResource(R.drawable.settings_24px),
                     contentDescription = "settings button"
                 ) {
 
