@@ -22,6 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
 
+/** Sets device display brightness upon entering composition
+ * @param brightness  brightness percent as a float. defaults to max brightness
+ */
 @Composable
 fun ForceBrightness(brightness: Float = 1f) {
     val context = LocalContext.current

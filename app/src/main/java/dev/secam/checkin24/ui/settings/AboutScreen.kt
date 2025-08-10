@@ -15,11 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.secam.checkin24.ui
+package dev.secam.checkin24.ui.settings
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,14 +60,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.navigation.NavHostController
-//import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.R
+import dev.secam.checkin24.util.getAppVersion
+
 //import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -336,25 +333,6 @@ fun LicenseDialog(modifier: Modifier = Modifier, onDismissRequest: () -> Unit) {
                 }
             }
         }
-    }
-}
-
-
-fun getAppVersion(
-    context: Context,
-): String? {
-    return try {
-        val packageManager = context.packageManager
-        val packageName = context.packageName
-        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
-        } else {
-            packageManager.getPackageInfo(packageName, 0)
-        }
-        packageInfo.versionName
-
-    } catch (_: Exception) {
-        null
     }
 }
 
