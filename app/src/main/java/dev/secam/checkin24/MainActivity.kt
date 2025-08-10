@@ -23,42 +23,32 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
+import dev.secam.checkin24.data.PreferencesRepo
 import dev.secam.checkin24.ui.CheckInApp
-import dev.secam.checkin24.ui.CheckInViewModel
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var preferencesRepo: PreferencesRepo
 
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel: CheckInViewModel =
-                viewModel(
-                    factory = CheckInViewModel.Factory
-                )
-            val uiState = viewModel.uiState.collectAsState().value
+            val theme = preferencesRepo.preferencesFlow.collectAsState(null).value?.theme
+            val colorScheme = preferencesRepo.preferencesFlow.collectAsState(null).value?.colorScheme
             CheckIn24Theme(
-                darkTheme = if (uiState.theme == "dark") true else if (uiState.theme == "light") false else isSystemInDarkTheme()
+                appTheme = theme,
+                appColorScheme = colorScheme
             ) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    CheckInApp(viewModel = viewModel)
-                }
+                CheckInApp()
             }
         }
     }
