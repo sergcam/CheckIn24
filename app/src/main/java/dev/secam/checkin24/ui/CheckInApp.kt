@@ -25,7 +25,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.navigation.NavHostController
@@ -33,6 +32,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.ui.greeting.GreetingScreen
+import dev.secam.checkin24.ui.settings.AboutScreen
+import dev.secam.checkin24.ui.settings.SettingsScreen
 
 enum class CheckInScreen() {
     Greeting(),
@@ -44,19 +45,8 @@ enum class CheckInScreen() {
 @Composable
 fun CheckInApp(
     modifier: Modifier = Modifier,
-    viewModel: CheckInViewModel,
     navController: NavHostController = rememberNavController()
 ) {
-    val uiState = viewModel.uiState.collectAsState().value
-    val mbrId = uiState.mbrId
-    val firstName = uiState.firstName
-    val theme = uiState.theme
-    val colorScheme = uiState.colorScheme
-    val qrOnOpen = uiState.qrOnOpen
-    val qrMaxBrightness = uiState.qrMaxBrightness
-    val pureBlack = uiState.pureBlack
-    val useNtp = uiState.useNtp
-    val ntpServer = uiState.ntpServer
 
     NavHost(
         navController = navController,
@@ -111,19 +101,7 @@ fun CheckInApp(
             }
 
         ) {
-            SettingsScreen(
-                mbrId = mbrId,
-                firstName = firstName,
-                theme = theme,
-                colorScheme = colorScheme,
-                qrOnOpen = qrOnOpen,
-                qrMaxBrightness = qrMaxBrightness,
-                pureBlack = pureBlack,
-                useNtp = useNtp,
-                ntpServer = ntpServer,
-                viewModel = viewModel,
-                navController = navController
-            )
+            SettingsScreen(navController)
         }
         composable(
             route = CheckInScreen.About.name,

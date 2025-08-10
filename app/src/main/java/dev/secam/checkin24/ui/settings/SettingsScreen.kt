@@ -15,11 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.secam.checkin24.ui
+package dev.secam.checkin24.ui.settings
 
-//import androidx.compose.ui.tooling.preview.Preview
-//import androidx.lifecycle.viewmodel.compose.viewModel
-//import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,14 +28,9 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -48,50 +40,57 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.R
+import dev.secam.checkin24.data.AppColorScheme
+import dev.secam.checkin24.data.AppTheme
+import dev.secam.checkin24.ui.CheckInScreen
 import dev.secam.checkin24.ui.components.CheckInTopBar
-import dev.secam.checkin24.ui.theme.CheckIn24Theme
 
-//import dev.secam.checkin24.ui.theme.CheckIn24Theme
-
+const val dimAmount = .25f
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    mbrId: String,
-    firstName: String,
-    theme: String,
-    colorScheme: String,
-    qrOnOpen: Boolean,
-    qrMaxBrightness: Boolean,
-    pureBlack: Boolean,
-    useNtp: Boolean,
-    ntpServer: String,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: CheckInViewModel
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
+    //user preferences
+    val prefs = viewModel.prefState.collectAsState().value
+    val mbrId = prefs.mbrId
+    val firstName = prefs.firstName
+    val theme = prefs.theme
+    val colorScheme = prefs.colorScheme
+    val qrOnOpen = prefs.qrOnOpen
+    val qrMaxBrightness = prefs.qrMaxBrightness
+    val pureBlack = prefs.pureBlack
+    val useNtp = prefs.useNtp
+    val ntpServer = prefs.ntpServer
+
+    // ui state
+    val uiState = viewModel.uiState.collectAsState().value
+    val showUserInfoDialog = uiState.showUserInfoDialog
+    val showThemeDialog = uiState.showThemeDialog
+    val showColorSchemeDialog = uiState.showColorSchemeDialog
+    val showNtpDialog = uiState.showNtpDialog
+
     Scaffold(
         topBar = {
             CheckInTopBar(
@@ -104,68 +103,27 @@ fun SettingsScreen(
         Column(
             modifier = modifier.padding(contentPadding)
         ) {
-            DialogSettingsItem(
+            SettingsItem(
                 headlineContent = "Edit User Info",
                 supportingContent = mbrId,
-                which = "UserInfo",
-                leadingContent = {
-                    Icon(
-                        imageVector = Icons.Outlined.Person,
-                        contentDescription = null
-                    )
-                },
-                mbrId = mbrId,
-                firstName = firstName,
-                viewModel = viewModel
-            )
-            DialogSettingsItem(
-                headlineContent = "Theme",
-                supportingContent =
-                    when (theme) {
-                        "system" -> "Follow System"
-                        "dark" -> "Dark"
-                        "light" -> "Light"
-                        else -> ""
-                    },
-                which = "Theme",
-                leadingContent = {
-                    Icon(
-                        painter = when (theme) {
-                            "system" -> painterResource(R.drawable.outline_brightness_6_24)
-                            "dark" -> painterResource(R.drawable.outline_dark_mode_24)
-                            "light" -> painterResource(R.drawable.outline_light_mode_24)
-                            else -> painterResource(R.drawable.outline_brightness_6_24)
+                icon = painterResource(R.drawable.person_24px),
+            ) {viewModel.setShowUserInfoDialog(true)}
 
-                        },
-                        contentDescription = null
-                    )
-                },
-                theme = theme,
-                viewModel = viewModel
-            )
-            DialogSettingsItem(
+            SettingsItem(
+                headlineContent = "Theme",
+                supportingContent = theme.displayName,
+                icon = when (theme) {
+                    AppTheme.System -> painterResource(R.drawable.outline_brightness_6_24)
+                    AppTheme.Dark -> painterResource(R.drawable.outline_dark_mode_24)
+                    AppTheme.Light -> painterResource(R.drawable.outline_light_mode_24)
+                }
+            ) {viewModel.setShowThemeDialog(true)}
+
+            SettingsItem(
                 headlineContent = "Color Scheme",
-                supportingContent =
-                    when (colorScheme) {
-                        "dynamic" -> "Dynamic"
-                        "red" -> "Red"
-                        "orange" -> "Orange"
-                        "yellow" -> "Yellow"
-                        "green" -> "Green"
-                        "blue" -> "Blue"
-                        "purple" -> "Purple"
-                        else -> ""
-                    },
-                which = "ColorScheme",
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.outline_palette_24),
-                        contentDescription = null
-                    )
-                },
-                colorScheme = colorScheme,
-                viewModel = viewModel
-            )
+                supportingContent = colorScheme.displayName,
+                icon = painterResource(R.drawable.outline_palette_24)
+            ) {viewModel.setShowColorSchemeDialog(true)}
 
             ToggleSettingsItem(
                 headlineContent = "QR Code on Startup",
@@ -188,61 +146,66 @@ fun SettingsScreen(
                 currentState = useNtp,
                 onToggle = viewModel::setUseNtp
             )
-            DialogSettingsItem(
+            SettingsItem(
                 headlineContent = "Choose NTP Server",
                 supportingContent = ntpServer,
-                which = "Ntp",
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.outline_access_time_24),
-                        contentDescription = null
-                    )
-                },
-                ntpServer = ntpServer,
-                enabled = useNtp,
-                viewModel = viewModel
-            )
+                icon = painterResource(R.drawable.outline_access_time_24),
+                enabled = useNtp
+            ) {viewModel.setShowNtpDialog(true)}
 
-            ListItem(
-                headlineContent = { Text("About") },
-                leadingContent = {
-                    Icon(
-                        imageVector = Icons.Outlined.Info,
-                        contentDescription = null
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding()
-                    .clickable(enabled = true, onClick = {
-                        navController.navigate(CheckInScreen.About.name)
-                    })
+            SettingsItem(
+                headlineContent = "About",
+                icon = painterResource(R.drawable.info_24px)
+            ) { navController.navigate(CheckInScreen.About.name) }
 
-            )
+            // show dialogs
+            if(showUserInfoDialog) {
+                UserInfoDialog(
+                    mbrId = mbrId,
+                    firstName = firstName,
+                    viewModel = viewModel
+                ) { viewModel.setShowUserInfoDialog(false) }
+            }
+            if(showThemeDialog) {
+                ThemeDialog(
+                    theme = theme,
+                    viewModel = viewModel
+                ) { viewModel.setShowThemeDialog(false) }
+            }
+            if(showColorSchemeDialog) {
+                ColorSchemeDialog(
+                    colorScheme = colorScheme,
+                    viewModel = viewModel
+                ) { viewModel.setShowColorSchemeDialog(false) }
+            }
+            if(showNtpDialog) {
+                NtpDialog(
+                    ntpServer = ntpServer,
+                    viewModel = viewModel
+                ) { viewModel.setShowNtpDialog(false) }
+            }
         }
     }
 }
 
 @Composable
-fun DialogSettingsItem(
-    leadingContent: @Composable (() -> Unit),
+fun SettingsItem(
     headlineContent: String,
-    supportingContent: String,
-    which: String,
+    icon: Painter,
     modifier: Modifier = Modifier,
-    mbrId: String = "",
-    firstName: String = "",
-    theme: String = "",
-    colorScheme: String = "",
-    ntpServer: String = "",
+    supportingContent: String = "",
     enabled: Boolean = true,
-    viewModel: CheckInViewModel
+    onClick: () -> Unit
 ) {
-    var showDialog by remember { mutableStateOf(false) }
     ListItem(
         headlineContent = { Text(headlineContent,fontWeight = FontWeight.Medium) },
         supportingContent = { Text(supportingContent) },
-        leadingContent = leadingContent,
+        leadingContent = {
+            Icon(
+                painter = icon,
+                contentDescription = null
+            )
+        },
         colors = if (enabled) ListItemDefaults.colors() else ListItemDefaults.colors(
             headlineColor = MaterialTheme.colorScheme.outline,
             supportingColor = MaterialTheme.colorScheme.outlineVariant,
@@ -250,22 +213,11 @@ fun DialogSettingsItem(
         ),
         modifier = modifier
             .clickable(enabled = enabled, onClick = {
-                showDialog = true
+                onClick()
             })
             .fillMaxWidth()
             .padding()
     )
-    if (showDialog) {
-        DialogPicker(
-            mbrId,
-            firstName,
-            theme,
-            colorScheme,
-            ntpServer,
-            which,
-            viewModel
-        ) { showDialog = false }
-    }
 }
 
 @Composable
@@ -276,7 +228,6 @@ fun ToggleSettingsItem(
     supportingContent: String? = null,
     onToggle: (Boolean) -> Unit
 ) {
-    var checked by remember { mutableStateOf(currentState) }
     ListItem(
         headlineContent = { Text(headlineContent,fontWeight = FontWeight.Medium) },
         supportingContent = {
@@ -286,53 +237,52 @@ fun ToggleSettingsItem(
         },
         trailingContent = {
             Switch(
-                checked = checked,
+                checked = currentState,
                 onCheckedChange = null
             )
         },
         modifier = modifier
             .clickable(enabled = true, onClick = {
-                checked = !checked
-                onToggle(checked)
+                onToggle(!currentState)
             })
             .fillMaxWidth()
             .padding(horizontal = 0.dp, vertical = 0.dp)
     )
 }
 
-@Composable
-fun DialogPicker(
-    mbrId: String = "",
-    firstName: String = "",
-    theme: String = "",
-    colorScheme: String = "",
-    ntpServer: String = "",
-    which: String,
-    viewModel: CheckInViewModel,
-    onDismissRequest: () -> Unit
-) {
-    when (which) {
-        "UserInfo" -> UserInfoDialog(mbrId, firstName, viewModel = viewModel, onDismissRequest)
-        "Theme" -> ThemeDialog(theme, viewModel, onDismissRequest)
-        "ColorScheme" -> ColorSchemeDialog(colorScheme, viewModel, onDismissRequest)
-        "Ntp" -> NtpDialog(ntpServer, viewModel, onDismissRequest)
-    }
-
-
-}
+//@Composable
+//fun DialogPicker(
+//    mbrId: String = "",
+//    firstName: String = "",
+//    theme: String = "",
+//    colorScheme: String = "",
+//    ntpServer: String = "",
+//    which: String,
+//    viewModel: CheckInViewModel,
+//    onDismissRequest: () -> Unit
+//) {
+//    when (which) {
+//        "UserInfo" -> UserInfoDialog(mbrId, firstName, viewModel = viewModel, onDismissRequest)
+//        "Theme" -> ThemeDialog(theme, viewModel, onDismissRequest)
+//        "ColorScheme" -> ColorSchemeDialog(colorScheme, viewModel, onDismissRequest)
+//        "Ntp" -> NtpDialog(ntpServer, viewModel, onDismissRequest)
+//    }
+//
+//
+//}
 
 
 @Composable
 fun UserInfoDialog(
     mbrId: String,
     firstName: String = "",
-    viewModel: CheckInViewModel,
+    viewModel: SettingsViewModel,
     onDismissRequest: () -> Unit
 ) {
     val mbrIdFieldState = rememberTextFieldState(mbrId)
     val nameFieldState = rememberTextFieldState(firstName)
     Dialog(onDismissRequest = { onDismissRequest() }) {
-        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(.25f)
+        SetDim(dimAmount)
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -380,8 +330,8 @@ fun UserInfoDialog(
                     }
                     TextButton(
                         onClick = {
-                            (viewModel::setMbrId)(mbrIdFieldState.text as String)
-                            (viewModel::setFirstName)(nameFieldState.text as String)
+                            viewModel.setMbrId(mbrIdFieldState.text as String)
+                            viewModel.setFirstName(nameFieldState.text as String)
                             onDismissRequest()
                         },
                     ) {
@@ -395,22 +345,20 @@ fun UserInfoDialog(
 }
 
 @Composable
-fun ThemeDialog(theme: String, viewModel: CheckInViewModel, onDismissRequest: () -> Unit) {
+fun ThemeDialog(
+    theme: AppTheme,
+    viewModel: SettingsViewModel,
+    onDismissRequest: () -> Unit
+) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
-        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(.25f)
+        SetDim(dimAmount)
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
         ) {
-            val radioOptions = listOf("Follow System", "Light", "Dark")
-            val curTheme = when (theme) {
-                "system" -> 0
-                "light" -> 1
-                "dark" -> 2
-                else -> 0
-            }
-            val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[curTheme]) }
+            val radioOptions = AppTheme.entries.toList()
+            val (selectedOption, onOptionSelected) = remember { mutableStateOf(theme ) }
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start,
@@ -425,23 +373,16 @@ fun ThemeDialog(theme: String, viewModel: CheckInViewModel, onDismissRequest: ()
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
-                radioOptions.forEach { text ->
+                radioOptions.forEach { option ->
                     Row(
                         Modifier
                             .fillMaxWidth()
                             .height(46.dp)
                             .selectable(
-                                selected = (text == selectedOption),
+                                selected = (option == selectedOption),
                                 onClick = {
-                                    onOptionSelected(text)
-                                    viewModel.setTheme(
-                                        when (text) {
-                                            "Follow System" -> "system"
-                                            "Dark" -> "dark"
-                                            "Light" -> "light"
-                                            else -> ""
-                                        }
-                                    )
+                                    onOptionSelected(option)
+                                    viewModel.setTheme(option)
                                     onDismissRequest()
                                 },
                                 role = Role.RadioButton
@@ -449,11 +390,11 @@ fun ThemeDialog(theme: String, viewModel: CheckInViewModel, onDismissRequest: ()
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = (text == selectedOption),
+                            selected = (option == selectedOption),
                             onClick = null // null recommended for accessibility with screen readers
                         )
                         Text(
-                            text = text,
+                            text = option.displayName,
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(start = 16.dp)
                         )
@@ -466,31 +407,20 @@ fun ThemeDialog(theme: String, viewModel: CheckInViewModel, onDismissRequest: ()
 
 @Composable
 fun ColorSchemeDialog(
-    colorScheme: String,
-    viewModel: CheckInViewModel,
+    colorScheme: AppColorScheme,
+    viewModel: SettingsViewModel,
     onDismissRequest: () -> Unit
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
-        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(.25f)
+        SetDim(dimAmount)
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
 
             shape = RoundedCornerShape(16.dp),
         ) {
-            val radioOptions =
-                listOf("Dynamic", "Red", "Orange", "Yellow", "Green", "Blue", "Purple")
-            val curColor = when (colorScheme) {
-                "dynamic" -> 0
-                "red" -> 1
-                "orange" -> 2
-                "yellow" -> 3
-                "green" -> 4
-                "blue" -> 5
-                "purple" -> 6
-                else -> 0
-            }
-            val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[curColor]) }
+            val radioOptions = AppColorScheme.entries.toList()
+            val (selectedOption, onOptionSelected) = remember { mutableStateOf(colorScheme) }
 
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -506,27 +436,16 @@ fun ColorSchemeDialog(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
-                radioOptions.forEach { text ->
+                radioOptions.forEach { option ->
                     Row(
                         Modifier
                             .fillMaxWidth()
                             .height(46.dp)
                             .selectable(
-                                selected = (text == selectedOption),
+                                selected = (option == selectedOption),
                                 onClick = {
-                                    onOptionSelected(text)
-                                    viewModel.setColorScheme(
-                                        when (text) {
-                                            radioOptions[0] -> "dynamic"
-                                            radioOptions[1] -> "red"
-                                            radioOptions[2] -> "orange"
-                                            radioOptions[3] -> "yellow"
-                                            radioOptions[4] -> "green"
-                                            radioOptions[5] -> "blue"
-                                            radioOptions[6] -> "purple"
-                                            else -> ""
-                                        }
-                                    )
+                                    onOptionSelected(option)
+                                    viewModel.setColorScheme(option)
                                     onDismissRequest()
                                 },
                                 role = Role.RadioButton
@@ -535,11 +454,11 @@ fun ColorSchemeDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = (text == selectedOption),
+                            selected = (option == selectedOption),
                             onClick = null // null recommended for accessibility with screen readers
                         )
                         Text(
-                            text = text,
+                            text = option.displayName,
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(start = 16.dp)
                         )
@@ -553,13 +472,13 @@ fun ColorSchemeDialog(
 @Composable
 fun NtpDialog(
     ntpServer: String,
-    viewModel: CheckInViewModel,
+    viewModel: SettingsViewModel,
     onDismissRequest: () -> Unit
 ) {
     val ntpFieldState = rememberTextFieldState(ntpServer)
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
-        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(.25f)
+        SetDim(dimAmount)
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -602,7 +521,7 @@ fun NtpDialog(
                     }
                     TextButton(
                         onClick = {
-                            (viewModel::setNtpServer)(ntpFieldState.text as String)
+                            viewModel.setNtpServer(ntpFieldState.text as String)
                             onDismissRequest()
                         },
                     ) {
@@ -611,6 +530,10 @@ fun NtpDialog(
                 }
             }
         }
-
     }
+}
+
+@Composable
+fun SetDim(amount: Float){
+    (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(amount)
 }
