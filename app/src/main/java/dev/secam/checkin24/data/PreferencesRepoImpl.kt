@@ -33,8 +33,8 @@ import javax.inject.Inject
 data class UserPreferences(
     val mbrId: String = "",
     val firstName: String = "",
-    val theme: String = "",
-    val colorScheme: String = "",
+    val theme: AppTheme = AppTheme.System,
+    val colorScheme: AppColorScheme = AppColorScheme.Dynamic,
     val qrOnOpen: Boolean = false,
     val qrMaxBrightness: Boolean = false,
     val pureBlack: Boolean = false,
@@ -70,8 +70,8 @@ class PreferencesRepoImpl @Inject constructor(private val dataStore: DataStore<P
             Log.d(TAG, "prefs read")
             val mbrId = preferences[MBR_ID] ?: ""
             val firstName = preferences[FIRST_NAME] ?: ""
-            val theme = preferences[THEME] ?: "system"
-            val colorScheme = preferences[COLOR_SCHEME] ?: "dynamic"
+            val theme = preferences[THEME] ?: "System"
+            val colorScheme = preferences[COLOR_SCHEME] ?: "Dynamic"
             val qrOnOpen = preferences[QR_ON_OPEN] ?: false
             val qrMaxBrightness = preferences[QR_MAX_BRIGHTNESS] ?: true
             val pureBlack = preferences[PURE_BLACK] ?: false
@@ -80,8 +80,8 @@ class PreferencesRepoImpl @Inject constructor(private val dataStore: DataStore<P
             UserPreferences(
                 mbrId = mbrId,
                 firstName = firstName,
-                theme = theme,
-                colorScheme = colorScheme,
+                theme = AppTheme.valueOf(theme),
+                colorScheme = AppColorScheme.valueOf(colorScheme),
                 qrOnOpen = qrOnOpen,
                 qrMaxBrightness = qrMaxBrightness,
                 pureBlack = pureBlack,
@@ -103,15 +103,15 @@ class PreferencesRepoImpl @Inject constructor(private val dataStore: DataStore<P
         }
     }
 
-    override suspend fun saveThemePref(theme: String) {
+    override suspend fun saveThemePref(theme: AppTheme) {
         dataStore.edit { preferences ->
-            preferences[THEME] = theme
+            preferences[THEME] = theme.name
         }
     }
 
-    override suspend fun saveColorSchemePref(colorScheme: String) {
+    override suspend fun saveColorSchemePref(colorScheme: AppColorScheme) {
         dataStore.edit { preferences ->
-            preferences[COLOR_SCHEME] = colorScheme
+            preferences[COLOR_SCHEME] = colorScheme.name
         }
     }
 

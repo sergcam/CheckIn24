@@ -25,9 +25,9 @@ interface PreferencesRepo {
     suspend fun saveMbrId(mbrId: String)
     suspend fun saveFirstName(firstName: String)
 
-    suspend fun saveThemePref(theme: String)
+    suspend fun saveThemePref(theme: AppTheme)
 
-    suspend fun saveColorSchemePref(colorScheme: String)
+    suspend fun saveColorSchemePref(colorScheme: AppColorScheme)
 
     suspend fun saveQrOnOpenPref(qrOnOpen: Boolean)
 
