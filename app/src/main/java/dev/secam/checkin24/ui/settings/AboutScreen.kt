@@ -18,26 +18,19 @@
 package dev.secam.checkin24.ui.settings
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -49,18 +42,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogWindowProvider
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.R
+import dev.secam.checkin24.ui.components.SettingsItem
+import dev.secam.checkin24.ui.settings.dialogs.LicenseDialog
+import dev.secam.checkin24.ui.theme.CheckIn24Theme
 import dev.secam.checkin24.util.getAppVersion
 
 
@@ -97,103 +90,12 @@ fun AboutScreen(navController: NavHostController, modifier: Modifier = Modifier)
 }
 
 @Composable
-fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
-    OutlinedCard(
-
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(top = 8.dp)
-        ) {
-            Text(
-                text = "Author",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = modifier
-                    .padding(horizontal = 16.dp, vertical = 6.dp)
-            )
-        }
-
-        Column {
-            ListItem(
-                headlineContent = { Text("Sergio Camacho") },
-
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.person_24px),
-                        contentDescription = null
-                    )
-                },
-                modifier = modifier
-                    .clickable(enabled = true, onClick = {})
-                    .fillMaxWidth()
-                    .padding()
-            )
-            ListItem(
-                headlineContent = { Text("Github") },
-                supportingContent = { Text("sergcam") },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.github_mark),
-                        contentDescription = null,
-                        modifier = modifier
-                            .size(24.dp)
-                    )
-                },
-                modifier = modifier
-                    .clickable(
-                        enabled = true,
-                        onClick = { uriHandler.openUri("https://github.com/sergcam/") })
-                    .fillMaxWidth()
-                    .padding()
-            )
-            ListItem(
-                headlineContent = { Text("Website") },
-                supportingContent = { Text("secam.dev") },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.insert_link_24px),
-                        contentDescription = null
-                    )
-                },
-                modifier = modifier
-                    .clickable(
-                        enabled = true,
-                        onClick = { uriHandler.openUri("https://secam.dev") }
-                    )
-                    .fillMaxWidth()
-                    .padding()
-            )
-            ListItem(
-                headlineContent = { Text("Email") },
-                supportingContent = { Text("sergio@secam.dev") },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.mail_24px),
-                        contentDescription = null
-                    )
-                },
-                modifier = modifier
-                    .clickable(
-                        enabled = true,
-                        onClick = { uriHandler.openUri("mailto:sergio@secam.dev") }
-                    )
-                    .fillMaxWidth()
-                    .padding()
-            )
-        }
-    }
-}
-
-@Composable
 fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
     var showDialog by remember { mutableStateOf(false) }
     OutlinedCard(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background
+        ),
         modifier = modifier
             .padding(16.dp)
             .fillMaxWidth()
@@ -220,56 +122,20 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
         }
 
         Column {
-            ListItem(
-                headlineContent = { Text("Version") },
-                supportingContent = {
-                    Text(
-                        text = getAppVersion(LocalContext.current) ?: ""
-                    )
-                },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.info_24px),
-                        contentDescription = null
-                    )
-                },
-                modifier = modifier
-                    .clickable(enabled = true, onClick = {})
-                    .fillMaxWidth()
-                    .padding()
+            SettingsItem(
+                headlineContent = "Version",
+                icon = painterResource(R.drawable.info_24px),
+                supportingContent = getAppVersion(LocalContext.current) ?: "null",
             )
-            ListItem(
-                headlineContent = { Text("Source Code") },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.code_24px),
-                        contentDescription = null
-                    )
-                },
-                modifier = modifier
-                    .clickable(
-                        enabled = true,
-                        onClick = { uriHandler.openUri("https://github.com/sergcam/CheckIn24") })
-                    .fillMaxWidth()
-                    .padding()
-            )
-            ListItem(
-                headlineContent = { Text("License") },
-                supportingContent = { Text("GPL v3") },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.balance_24px),
-                        contentDescription = null
-                    )
-                },
-                modifier = modifier
-                    .clickable(
-                        enabled = true,
-                        onClick = { showDialog = true }
-                    )
-                    .fillMaxWidth()
-                    .padding()
-            )
+            SettingsItem(
+                headlineContent = "Source Code",
+                icon = painterResource(R.drawable.code_24px),
+            ) { uriHandler.openUri("https://github.com/sergcam/CheckIn24") }
+            SettingsItem(
+                headlineContent = "License",
+                icon = painterResource(R.drawable.balance_24px),
+                supportingContent = "GPL v3",
+            ) { showDialog = true }
         }
     }
     if (showDialog) {
@@ -278,62 +144,58 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LicenseDialog(modifier: Modifier = Modifier, onDismissRequest: () -> Unit) {
-    Dialog(onDismissRequest = { onDismissRequest() }) {
-        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(.25f)
-        Card(
-            modifier = modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
+fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
+    OutlinedCard(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background
+        ),
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(top = 8.dp)
         ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.End,
-                modifier = modifier.padding(horizontal = 26.dp)
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Start,
-                    modifier = modifier.padding(top = 20.dp)
-                ) {
-                    Text(
-                        text = "License",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = modifier.padding(bottom = 26.dp),
-                    )
-                    Column(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .size(300.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.gplv3),
-                            modifier = modifier
-                                .verticalScroll(rememberScrollState())
-                        )
-                    }
-                }
-                Row(
-                    modifier = modifier
-                        .padding(top = 12.dp, bottom = 14.dp)
-                ) {
-                    TextButton(
-                        onClick = { onDismissRequest() }
-                        ) {
-                        Text("Close")
-                    }
-                }
-            }
+            Text(
+                text = "Author",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = modifier
+                    .padding(horizontal = 16.dp, vertical = 6.dp)
+            )
+        }
+
+        Column {
+            SettingsItem(
+                headlineContent = "Sergio Camacho",
+                icon = painterResource(R.drawable.person_24px),
+            )
+            SettingsItem(
+                headlineContent = "Github",
+                supportingContent = "sergcam",
+                icon = painterResource(R.drawable.github_mark),
+            ) { uriHandler.openUri("https://github.com/sergcam/") }
+            SettingsItem(
+                headlineContent = "Website",
+                supportingContent = "secam.dev",
+                icon = painterResource(R.drawable.insert_link_24px),
+            ) { uriHandler.openUri("https://secam.dev") }
+            SettingsItem(
+                headlineContent = "Email",
+                supportingContent = "sergio@secam.dev",
+                icon = painterResource(R.drawable.mail_24px),
+            ) { uriHandler.openUri("mailto:sergio@secam.dev") }
         }
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun AboutPreview() {
-//    CheckIn24Theme {
-//        AboutScreen(rememberNavController())
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun AboutPreview() {
+    CheckIn24Theme {
+        AboutScreen(rememberNavController())
+    }
+}
