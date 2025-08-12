@@ -38,8 +38,10 @@ private val LightColorScheme = lightColorScheme(
 fun CheckIn24Theme(
     appTheme: AppTheme? = AppTheme.System,
     appColorScheme: AppColorScheme? = AppColorScheme.Dynamic,
+    pureBlack: Boolean? = false,
     content: @Composable () -> Unit
 ) {
+    val pureBlack = pureBlack ?: false
     val darkTheme = when(appTheme) {
         AppTheme.Dark -> true
         AppTheme.Light -> false
@@ -52,9 +54,12 @@ fun CheckIn24Theme(
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (darkTheme) {
+                if (pureBlack) BlackThemeConvert(dynamicDarkColorScheme(context)) else dynamicDarkColorScheme(context)
+            } else dynamicLightColorScheme(context)
         }
 
+        darkTheme && pureBlack -> BlackThemeConvert(DarkColorScheme)
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

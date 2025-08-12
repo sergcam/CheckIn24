@@ -1,0 +1,57 @@
+package dev.secam.checkin24.ui.theme
+
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.darkColorScheme
+
+fun BlackThemeConvert(colorScheme: ColorScheme): ColorScheme {
+    return darkColorScheme(
+        primary = colorScheme.primary,
+        onPrimary = colorScheme.onPrimary,
+        primaryContainer = colorScheme.primaryContainer,
+        onPrimaryContainer = colorScheme.onPrimaryContainer,
+        inversePrimary = colorScheme.inversePrimary,
+        secondary = colorScheme.secondary,
+        onSecondary = colorScheme.onSecondary,
+        secondaryContainer = colorScheme.secondaryContainer,
+        onSecondaryContainer = colorScheme.onSecondaryContainer,
+        tertiary = colorScheme.tertiary,
+        onTertiary = colorScheme.onTertiary,
+        tertiaryContainer = colorScheme.tertiaryContainer,
+        onTertiaryContainer = colorScheme.onTertiaryContainer,
+        background = Black,
+        onBackground = colorScheme.onBackground,
+        surface = colorScheme.surface,
+        onSurface = colorScheme.onSurface,
+        surfaceVariant = colorScheme.surfaceVariant,
+        onSurfaceVariant = colorScheme.onSurfaceVariant,
+        surfaceTint = colorScheme.primary,
+        inverseSurface = colorScheme.inverseSurface,
+        inverseOnSurface = colorScheme.inverseOnSurface,
+        error = colorScheme.error,
+        onError = colorScheme.onError,
+        errorContainer = colorScheme.errorContainer,
+        onErrorContainer = colorScheme.onErrorContainer,
+        outline = colorScheme.outline,
+        outlineVariant = colorScheme.outlineVariant,
+        scrim = colorScheme.scrim,
+        surfaceBright = colorScheme.surfaceBright,
+        surfaceContainer = colorScheme.surfaceContainer,
+        surfaceContainerHigh = colorScheme.surfaceContainerHigh,
+        surfaceContainerHighest = colorScheme.surfaceContainerHighest,
+        surfaceContainerLow = colorScheme.surfaceContainerLow,
+        surfaceContainerLowest = colorScheme.surfaceContainerLowest,
+        surfaceDim = colorScheme.surfaceDim,
+        primaryFixed = colorScheme.primaryFixed,
+        primaryFixedDim = colorScheme.primaryFixedDim,
+        onPrimaryFixed = colorScheme.onPrimaryFixed,
+        onPrimaryFixedVariant = colorScheme.onPrimaryFixedVariant,
+        secondaryFixed = colorScheme.secondaryFixed,
+        secondaryFixedDim = colorScheme.secondaryFixedDim,
+        onSecondaryFixed = colorScheme.onSecondaryFixed,
+        onSecondaryFixedVariant = colorScheme.onSecondaryFixed,
+        tertiaryFixed = colorScheme.tertiaryFixed,
+        tertiaryFixedDim = colorScheme.tertiaryFixedDim,
+        onTertiaryFixed = colorScheme.onTertiaryFixed,
+        onTertiaryFixedVariant = colorScheme.onTertiaryFixed
+    )
+}

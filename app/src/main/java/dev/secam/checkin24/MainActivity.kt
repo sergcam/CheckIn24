@@ -44,9 +44,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             val theme = preferencesRepo.preferencesFlow.collectAsState(null).value?.theme
             val colorScheme = preferencesRepo.preferencesFlow.collectAsState(null).value?.colorScheme
+            val pureBlack = preferencesRepo.preferencesFlow.collectAsState(null).value?.pureBlack
             CheckIn24Theme(
                 appTheme = theme,
-                appColorScheme = colorScheme
+                appColorScheme = colorScheme,
+                pureBlack = pureBlack
             ) {
                 CheckInApp()
             }
