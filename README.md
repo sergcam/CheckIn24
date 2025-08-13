@@ -1,6 +1,6 @@
 <p align="center"><img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" width="150"></p>
 <h1 align="center"><b>CheckIn24</b></h1>
-<h4 align="center">Offline, Material You, check in client for 24 Hour Fitness gym memberships built with Jetpack Compose</h4>
+<h4 align="center">Offline, Material You, check in client for 24 Hour Fitness gym memberships</h4>
 <p align="center">
     <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/sergcam/CheckIn24/total?link=https%3A%2F%2Fgithub.com%2Fsergcam%2FCheckIn24%2Freleases">
     <img alt="Minimum SDK Version" src="https://img.shields.io/badge/API-28%2B-1450A8?style=flat">
@@ -8,7 +8,7 @@
 
 ## About
 
-Checkin24 is a lightweight, offline alternative to the official 24go app for checking into your 24 Hour Fitness gym. This app can NOT get you into the gym for free. An active 24 hour fitness membership is still required.
+Checkin24 is a lightweight, offline alternative to the official 24go app for checking into your 24 Hour Fitness gym built with Jetpack Compose. This app can NOT get you into the gym for free. An active 24 hour fitness membership is still required.
 
 ## Features 
 - Fully offline
