@@ -113,6 +113,7 @@ fun GreetingScreen(
                     .padding(top = 54.dp, bottom = 20.dp)
             )
             CheckInTracker()
+            // TODO: Implement check in tracker
             GreetingButton(
                 text = "Check In History",
                 modifier = modifier
