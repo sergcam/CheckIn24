@@ -20,6 +20,7 @@ package dev.secam.checkin24.ui.settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -92,7 +93,8 @@ fun SettingsScreen(
             SettingsItem(
                 headlineContent = "Color Scheme",
                 supportingContent = colorScheme.displayName,
-                icon = painterResource(R.drawable.palette_24px)
+                icon = painterResource(R.drawable.palette_24px),
+                iconColor = MaterialTheme.colorScheme.primary
             ) {viewModel.setShowColorSchemeDialog(true)}
 
             ToggleSettingsItem(
@@ -111,10 +113,12 @@ fun SettingsScreen(
                 currentState = pureBlack,
                 onToggle = viewModel::setPureBlack
             )
+            // TODO: implement ntp
             ToggleSettingsItem(
                 headlineContent = "Use Internet Time",
                 currentState = useNtp,
-                onToggle = viewModel::setUseNtp
+                enabled = false,
+                onToggle = viewModel::setUseNtp,
             )
             SettingsItem(
                 headlineContent = "Choose NTP Server",

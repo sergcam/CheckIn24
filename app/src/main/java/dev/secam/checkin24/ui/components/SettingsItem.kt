@@ -29,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ fun SettingsItem(
     headlineContent: String,
     icon: Painter,
     modifier: Modifier = Modifier,
+    iconColor: Color = ListItemDefaults.colors().leadingIconColor,
     supportingContent: String? = null,
     enabled: Boolean = true,
     onClick: () -> Unit = {}
@@ -57,7 +59,8 @@ fun SettingsItem(
             )
         },
         colors = if (enabled) ListItemDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = MaterialTheme.colorScheme.background,
+            leadingIconColor = iconColor
         ) else ListItemDefaults.colors(
             headlineColor = MaterialTheme.colorScheme.outline,
             supportingColor = MaterialTheme.colorScheme.outlineVariant,

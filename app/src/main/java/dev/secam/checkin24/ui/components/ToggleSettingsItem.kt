@@ -35,6 +35,7 @@ fun ToggleSettingsItem(
     currentState: Boolean,
     headlineContent: String,
     supportingContent: String? = null,
+    enabled: Boolean = true,
     onToggle: (Boolean) -> Unit
 ) {
     ListItem(
@@ -50,11 +51,16 @@ fun ToggleSettingsItem(
                 onCheckedChange = null
             )
         },
-        colors = ListItemDefaults.colors(
+        colors = if (enabled) ListItemDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.background
+        ) else ListItemDefaults.colors(
+            headlineColor = MaterialTheme.colorScheme.outline,
+            supportingColor = MaterialTheme.colorScheme.outlineVariant,
+            leadingIconColor = MaterialTheme.colorScheme.outline,
             containerColor = MaterialTheme.colorScheme.background
         ),
         modifier = modifier
-            .clickable(enabled = true, onClick = {
+            .clickable(enabled = enabled, onClick = {
                 onToggle(!currentState)
             })
             .padding(horizontal = 0.dp, vertical = 0.dp)
