@@ -45,6 +45,7 @@ import dev.secam.checkin24.data.AppColorScheme
 import dev.secam.checkin24.ui.settings.SettingsViewModel
 import dev.secam.checkin24.util.SetDialogDim
 
+// TODO: disable dynamic color option on <API31
 @Composable
 fun ColorSchemeDialog(
     colorScheme: AppColorScheme,
