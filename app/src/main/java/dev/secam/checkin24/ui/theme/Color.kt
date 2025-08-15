@@ -399,7 +399,7 @@ private val BlueDarkColorScheme = darkColorScheme(
 
     )
 
-private val PurpleLightColorScheme = darkColorScheme(
+private val PurpleLightColorScheme = lightColorScheme(
     primary = Color(0xFF6B538C),
     onPrimary = Color(0xFFFFFFFF),
     primaryContainer = Color(0xFFEDDCFF),
@@ -436,7 +436,7 @@ private val PurpleLightColorScheme = darkColorScheme(
     surfaceContainerHigh = Color(0xFFEDE6EE),
     surfaceContainerHighest = Color(0xFFE7E0E8),
 )
-private val PurpleDarkColorScheme = lightColorScheme(
+private val PurpleDarkColorScheme = darkColorScheme(
     primary = Color(0xFFD6BBFB),
     onPrimary = Color(0xFF3B255B),
     primaryContainer = Color(0xFF523C73),
@@ -474,6 +474,80 @@ private val PurpleDarkColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFF37333A),
 )
 
+private val ClassicLightColorScheme = lightColorScheme(
+    primary = Color(0xFF234AD9),
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFF234AD9),
+    onPrimaryContainer = Color.White,
+
+    tertiary = Color(0xFFD3C6A1),
+    onTertiary = Color(0xFF383016),
+    tertiaryContainer = Color(0xFFEEAC4E),
+    onTertiaryContainer = Color(0xFF212121),
+    background = Color.White,
+    surface = Color.White,
+    surfaceContainerLowest = Color(0xff0E0E0E),
+    surfaceContainerLow = Color(0xFFFFFFFF),
+    surfaceContainer = Color(0xFFF2F2F2),
+    surfaceContainerHigh = Color(0xFFFFFFFF),
+    surfaceContainerHighest = Color(0xFFFFFFFF),
+    inversePrimary = Color(0xFFBFCCFF),
+
+    )
+private val ClassicDarkColorScheme = darkColorScheme(
+    primary = Color(0xFF234AD9),
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFF234AD9),
+    onPrimaryContainer = Color.White,
+
+    tertiary = Color(0xFFD3C6A1),
+    onTertiary = Color(0xFF383016),
+    tertiaryContainer = Color(0xFFEEAC4E),
+    onTertiaryContainer = Color(0xFF212121),
+    background = Color(0xff121212),
+
+    surface = Color(0xff121212),
+
+    surfaceContainerLowest = Color(0xff0E0E0E),
+    surfaceContainerLow = Color(0xff1C1B1B),
+    surfaceContainer = Color(0xff201F1F),
+    surfaceContainerHigh = Color(0xff2A2A2A),
+    surfaceContainerHighest = Color(0xff353434),
+
+
+    secondary = Color(0xFFBEC6DC),
+    onSecondary = Color(0xFF283141),
+    secondaryContainer = Color(0xFF3E4759),
+    onSecondaryContainer = Color(0xFFDAE2F9),
+//    tertiary = Color(0xFFDDBCE0),
+//    onTertiary = Color(0xFF3F2844),
+//    tertiaryContainer = Color(0xFF573E5C),
+//    onTertiaryContainer = Color(0xFFFAD8FD),
+    error = Color(0xFFFFB4AB),
+    onError = Color(0xFF690005),
+    errorContainer = Color(0xFF93000A),
+    onErrorContainer = Color(0xFFFFDAD6),
+//    background = Color(0xFF111318),
+    onBackground = Color(0xFFE2E2E9),
+//    surface = Color(0xFF111318),
+    onSurface = Color(0xFFE2E2E9),
+    surfaceVariant = Color(0xFF44474E),
+    onSurfaceVariant = Color(0xFFC4C6D0),
+    outline = Color(0xFF8E9099),
+    outlineVariant = Color(0xFF44474E),
+    scrim = Color(0xFF000000),
+    inverseSurface = Color(0xFFE2E2E9),
+    inverseOnSurface = Color(0xFF2E3036),
+    inversePrimary = Color(0xFF25367A),
+    surfaceDim = Color(0xFF111318),
+    surfaceBright = Color(0xFF37393E),
+//    surfaceContainerLowest = Color(0xFF0C0E13),
+//    surfaceContainerLow = Color(0xFF191C20),
+//    surfaceContainer = Color(0xFF1D2024),
+//    surfaceContainerHigh = Color(0xFF282A2F),
+//    surfaceContainerHighest = Color(0xFF33353A),
+)
+
 
 fun getColorScheme(appColorScheme: AppColorScheme, darkTheme: Boolean): ColorScheme {
     return when (appColorScheme) {
@@ -483,7 +557,7 @@ fun getColorScheme(appColorScheme: AppColorScheme, darkTheme: Boolean): ColorSch
         AppColorScheme.Green -> if (darkTheme) GreenDarkColorScheme else GreenLightColorScheme
         AppColorScheme.Blue -> if (darkTheme) BlueDarkColorScheme else BlueLightColorScheme
         AppColorScheme.Purple -> if (darkTheme) PurpleDarkColorScheme else PurpleLightColorScheme
-        AppColorScheme.Dynamic -> if (darkTheme) darkColorScheme() else lightColorScheme()
+        else -> if (darkTheme) ClassicDarkColorScheme else ClassicLightColorScheme
     }
 }
 

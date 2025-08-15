@@ -18,11 +18,13 @@
 package dev.secam.checkin24.data
 
 enum class AppColorScheme (val displayName: String){
+    Dynamic("Dynamic"),
+    Classic("Classic"),
     Red("Red"),
     Orange("Orange"),
     Yellow("Yellow"),
     Green("Green"),
     Blue("Blue"),
     Purple("Purple"),
-    Dynamic("Dynamic")
+
 }

@@ -105,7 +105,7 @@ fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) 
         disabledContentColor = Color.White
     )
     val buttonColorUnchecked = ButtonColors(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        containerColor = MaterialTheme.colorScheme.inversePrimary,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         disabledContainerColor = Color.White,
         disabledContentColor = Color.White
