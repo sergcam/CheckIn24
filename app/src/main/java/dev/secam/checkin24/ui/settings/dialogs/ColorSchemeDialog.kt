@@ -17,6 +17,7 @@
 
 package dev.secam.checkin24.ui.settings.dialogs
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +46,6 @@ import dev.secam.checkin24.data.AppColorScheme
 import dev.secam.checkin24.ui.settings.SettingsViewModel
 import dev.secam.checkin24.util.SetDialogDim
 
-// TODO: disable dynamic color option on <API31
 @Composable
 fun ColorSchemeDialog(
     colorScheme: AppColorScheme,
@@ -60,7 +60,7 @@ fun ColorSchemeDialog(
 
             shape = RoundedCornerShape(16.dp),
         ) {
-            val radioOptions = AppColorScheme.entries.toList()
+            val radioOptions = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) AppColorScheme.entries.toList() else AppColorScheme.entries.toList().subList(1,AppColorScheme.entries.size)
             val (selectedOption, onOptionSelected) = remember { mutableStateOf(colorScheme) }
 
             Column(

@@ -17,6 +17,7 @@
 
 package dev.secam.checkin24.data
 
+import android.os.Build
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -71,7 +72,7 @@ class PreferencesRepoImpl @Inject constructor(private val dataStore: DataStore<P
             val mbrId = preferences[MBR_ID] ?: ""
             val firstName = preferences[FIRST_NAME] ?: ""
             val theme = preferences[THEME] ?: "System"
-            val colorScheme = preferences[COLOR_SCHEME] ?: "Dynamic"
+            val colorScheme = preferences[COLOR_SCHEME] ?: if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) "Dynamic" else "Classic"
             val qrOnOpen = preferences[QR_ON_OPEN] ?: false
             val qrMaxBrightness = preferences[QR_MAX_BRIGHTNESS] ?: true
             val pureBlack = preferences[PURE_BLACK] ?: false
