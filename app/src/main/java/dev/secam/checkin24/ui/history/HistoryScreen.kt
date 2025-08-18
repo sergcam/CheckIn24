@@ -58,7 +58,7 @@ fun HistoryScreen(
         topBar = {
             CheckInTopBar(
                 title = "History",
-                actionIcon = painterResource(R.drawable.more_vert_24px),
+                actionIcon = painterResource(R.drawable.ic_more_vert_24px),
                 contentDescription = "more",
                 onBack = {
                     navController.navigateUp()
@@ -86,7 +86,7 @@ fun HistoryScreen(
                 text = { Text("Add check in") },
                 icon = {
                     Icon(
-                        painter = painterResource(R.drawable.calendar_add_on_24px),
+                        painter = painterResource(R.drawable.ic_calendar_add_on_24px),
                         contentDescription = "qr code icon"
                     )
                 },

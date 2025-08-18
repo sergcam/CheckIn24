@@ -90,7 +90,7 @@ fun DayInfo(
                             onClick = { onDelete(date, time) }
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.delete_24px),
+                                painter = painterResource(R.drawable.ic_delete_24px),
                                 contentDescription = "delete",
                                 tint = MaterialTheme.colorScheme.error
                             )

@@ -70,7 +70,7 @@ fun AboutScreen(navController: NavHostController, modifier: Modifier = Modifier)
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
-                            painter = painterResource(R.drawable.arrow_back_24px),
+                            painter = painterResource(R.drawable.ic_arrow_back_24px),
                             contentDescription = "back button"
                         )
                     }
@@ -106,7 +106,7 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 .padding(top = 8.dp)
         ) {
             Image(
-                painter = painterResource(R.drawable.c24circle),
+                painter = painterResource(R.drawable.ic_c24circle),
                 contentDescription = "app logo",
                 modifier = modifier
                     .size(50.dp)
@@ -124,16 +124,16 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
         Column {
             SettingsItem(
                 headlineContent = "Version",
-                icon = painterResource(R.drawable.info_24px),
+                icon = painterResource(R.drawable.ic_info_24px),
                 supportingContent = getAppVersion(LocalContext.current) ?: "null",
             )
             SettingsItem(
                 headlineContent = "Source Code",
-                icon = painterResource(R.drawable.code_24px),
+                icon = painterResource(R.drawable.ic_code_24px),
             ) { uriHandler.openUri("https://github.com/sergcam/CheckIn24") }
             SettingsItem(
                 headlineContent = "License",
-                icon = painterResource(R.drawable.balance_24px),
+                icon = painterResource(R.drawable.ic_balance_24px),
                 supportingContent = "GPL v3",
             ) { showDialog = true }
         }
@@ -171,22 +171,22 @@ fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
         Column {
             SettingsItem(
                 headlineContent = "Sergio Camacho",
-                icon = painterResource(R.drawable.person_24px),
+                icon = painterResource(R.drawable.ic_person_24px),
             )
             SettingsItem(
                 headlineContent = "Github",
                 supportingContent = "sergcam",
-                icon = painterResource(R.drawable.github_mark),
+                icon = painterResource(R.drawable.ic_github_logo),
             ) { uriHandler.openUri("https://github.com/sergcam/") }
             SettingsItem(
                 headlineContent = "Website",
                 supportingContent = "secam.dev",
-                icon = painterResource(R.drawable.insert_link_24px),
+                icon = painterResource(R.drawable.ic_insert_link_24px),
             ) { uriHandler.openUri("https://secam.dev") }
             SettingsItem(
                 headlineContent = "Email",
                 supportingContent = "sergio@secam.dev",
-                icon = painterResource(R.drawable.mail_24px),
+                icon = painterResource(R.drawable.ic_mail_24px),
             ) { uriHandler.openUri("mailto:sergio@secam.dev") }
         }
     }

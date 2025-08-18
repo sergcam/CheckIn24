@@ -140,7 +140,7 @@ fun QrCodeCard(mbrID: String, data: String, modifier: Modifier = Modifier) {
                         .aspectRatio(1f)
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.logo_24f),
+                        painter = painterResource(R.drawable.ic_logo_24f),
                         contentDescription = null
                     )
                 }

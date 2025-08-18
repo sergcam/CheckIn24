@@ -73,7 +73,7 @@ fun GreetingScreen(
         topBar = {
             CheckInTopBar(
                 title = "CheckIn24",
-                actionIcon = painterResource(R.drawable.settings_24px),
+                actionIcon = painterResource(R.drawable.ic_settings_24px),
                 contentDescription = "settings button"
             ) {
                 viewModel.setQrOpened()
@@ -88,7 +88,7 @@ fun GreetingScreen(
                 text = { Text("Check In") },
                 icon = {
                     Icon(
-                        painter = painterResource(R.drawable.qr_code_24px),
+                        painter = painterResource(R.drawable.ic_qr_code_24px),
                         contentDescription = "qr code icon"
                     )
                 },
@@ -119,7 +119,7 @@ fun GreetingScreen(
             }
             GreetingButton(
                 text = "Manage Account",
-                icon = painterResource(R.drawable.open_in_new_24px),
+                icon = painterResource(R.drawable.ic_open_in_new_24px),
                 iconDesc = null,
                 modifier = modifier
                     .padding(top = 16.dp)

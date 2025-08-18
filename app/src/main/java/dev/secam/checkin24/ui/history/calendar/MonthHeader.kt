@@ -61,7 +61,7 @@ fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () ->
                 onClick = onPrev,
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.chevron_left_24px),
+                    painter = painterResource(R.drawable.ic_chevron_left_24px),
                     contentDescription = "month back",
                 )
             }
@@ -76,7 +76,7 @@ fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () ->
                 onClick = onNext,
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.chevron_right_24px),
+                    painter = painterResource(R.drawable.ic_chevron_right_24px),
                     contentDescription = "month forward"
                 )
             }

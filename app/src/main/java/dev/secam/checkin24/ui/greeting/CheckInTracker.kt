@@ -93,8 +93,8 @@ fun CheckInTracker(modifier: Modifier = Modifier) {
 @Composable
 fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) {
     var isToggled by remember { mutableStateOf(false) }
-    val iconChecked = painterResource(R.drawable.check_24px)
-    val iconUnchecked = painterResource(R.drawable.close_24px)
+    val iconChecked = painterResource(R.drawable.ic_check_24px)
+    val iconUnchecked = painterResource(R.drawable.ic_close_24px)
     val buttonContentPadding = PaddingValues(0.dp)
     val buttonPadding = PaddingValues(start = 5.dp, end = 5.dp, bottom = 5.dp)
     val buttonSize = 50.dp

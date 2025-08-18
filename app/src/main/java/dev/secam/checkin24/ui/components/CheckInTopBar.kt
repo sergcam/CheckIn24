@@ -80,7 +80,7 @@ fun CheckInTopBar(title: String, modifier: Modifier = Modifier, onBack: () -> Un
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(
-                    painter = painterResource(R.drawable.arrow_back_24px),
+                    painter = painterResource(R.drawable.ic_arrow_back_24px),
                     contentDescription = "back button"
                 )
             }
@@ -106,7 +106,7 @@ fun CheckInTopBar(title: String, actionIcon: Painter, contentDescription: String
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(
-                    painter = painterResource(R.drawable.arrow_back_24px),
+                    painter = painterResource(R.drawable.ic_arrow_back_24px),
                     contentDescription = "back button"
                 )
             }
@@ -131,7 +131,7 @@ fun TopBarPreview(){
             topBar = {
                 CheckInTopBar(
                     title = "CheckIn24",
-                    actionIcon = painterResource(R.drawable.settings_24px),
+                    actionIcon = painterResource(R.drawable.ic_settings_24px),
                     contentDescription = "settings button"
                 ) {
 

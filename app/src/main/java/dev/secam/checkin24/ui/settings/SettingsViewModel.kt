@@ -130,9 +130,9 @@ class SettingsViewModel @Inject constructor(
     @Composable
     fun getThemeIcon(theme: AppTheme): Painter {
         return when (theme) {
-            AppTheme.System -> painterResource(R.drawable.brightness_6_24px)
-            AppTheme.Dark -> painterResource(R.drawable.dark_mode_24px)
-            AppTheme.Light -> painterResource(R.drawable.light_mode_24px)
+            AppTheme.System -> painterResource(R.drawable.ic_brightness_6_24px)
+            AppTheme.Dark -> painterResource(R.drawable.ic_dark_mode_24px)
+            AppTheme.Light -> painterResource(R.drawable.ic_light_mode_24px)
         }
     }
 }

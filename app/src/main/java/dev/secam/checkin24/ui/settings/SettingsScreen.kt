@@ -83,7 +83,7 @@ fun SettingsScreen(
             SettingsItem(
                 headlineContent = "Edit User Info",
                 supportingContent = mbrId,
-                icon = painterResource(R.drawable.person_24px),
+                icon = painterResource(R.drawable.ic_person_24px),
             ) {viewModel.setShowUserInfoDialog(true)}
 
             SettingsItem(
@@ -95,7 +95,7 @@ fun SettingsScreen(
             SettingsItem(
                 headlineContent = "Color Scheme",
                 supportingContent = colorScheme.displayName,
-                icon = painterResource(R.drawable.palette_24px),
+                icon = painterResource(R.drawable.ic_palette_24px),
                 iconColor = MaterialTheme.colorScheme.primary
             ) {viewModel.setShowColorSchemeDialog(true)}
 
@@ -125,13 +125,13 @@ fun SettingsScreen(
             SettingsItem(
                 headlineContent = "Choose NTP Server",
                 supportingContent = ntpServer,
-                icon = painterResource(R.drawable.access_time_24px),
+                icon = painterResource(R.drawable.ic_access_time_24px),
                 enabled = useNtp
             ) {viewModel.setShowNtpDialog(true)}
 
             SettingsItem(
                 headlineContent = "About",
-                icon = painterResource(R.drawable.info_24px)
+                icon = painterResource(R.drawable.ic_info_24px)
             ) { navController.navigate(CheckInScreen.About.name) }
 
             // show dialogs
