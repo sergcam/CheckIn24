@@ -32,13 +32,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.secam.checkin24.ui.greeting.GreetingScreen
+import dev.secam.checkin24.ui.history.HistoryScreen
 import dev.secam.checkin24.ui.settings.AboutScreen
 import dev.secam.checkin24.ui.settings.SettingsScreen
 
 enum class CheckInScreen() {
     Greeting(),
     Settings(),
-    About()
+    About(),
+    History()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,6 +78,32 @@ fun CheckInApp(
                 )
             }) {
             GreetingScreen(navController)
+        }
+        composable(
+            route = CheckInScreen.History.name,
+            enterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
+                )
+            },
+            exitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
+                )
+            },
+            popExitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
+                )
+            },
+            popEnterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
+                )
+            }
+
+        ) {
+            HistoryScreen(navController)
         }
         composable(
             route = CheckInScreen.Settings.name,

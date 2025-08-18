@@ -26,14 +26,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalUriHandler
@@ -46,7 +44,6 @@ import androidx.navigation.NavHostController
 import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.CheckInScreen
 import dev.secam.checkin24.ui.components.CheckInTopBar
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +53,6 @@ fun GreetingScreen(
     viewModel: GreetingViewModel = hiltViewModel(),
 ) {
     val uriHandler = LocalUriHandler.current
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     // ui state
@@ -119,9 +115,7 @@ fun GreetingScreen(
                 modifier = modifier
                     .padding(top = 16.dp)
             ) {
-                scope.launch {
-                    snackbarHostState.showSnackbar("Coming Soon", withDismissAction = true, duration = SnackbarDuration.Short)
-                }
+                navController.navigate(CheckInScreen.History.name)
             }
             GreetingButton(
                 text = "Manage Account",
