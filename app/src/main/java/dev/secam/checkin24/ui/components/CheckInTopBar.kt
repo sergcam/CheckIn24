@@ -90,30 +90,38 @@ fun CheckInTopBar(title: String, modifier: Modifier = Modifier, onBack: () -> Un
 }
 
 // top bar with action icon and back button
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun CheckInTopBar(title: String, actionIcon: Painter, contentDescription: String, modifier: Modifier = Modifier, onBack: () -> Unit, action: () -> Unit){
-//    TopAppBar(
-//        title = {
-//            Text(
-//                text = "CheckIn24",
-//                fontWeight = FontWeight.Bold
-//            )
-//        },
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.background
-//        ),
-//        actions = {
-//            IconButton(onClick = action) {
-//                Icon(
-//                    painter = actionIcon,
-//                    contentDescription = contentDescription
-//                )
-//            }
-//        },
-//        modifier = modifier
-//    )
-//}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CheckInTopBar(title: String, actionIcon: Painter, contentDescription: String, modifier: Modifier = Modifier, onBack: () -> Unit, action: () -> Unit){
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background
+        ),
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    painter = painterResource(R.drawable.arrow_back_24px),
+                    contentDescription = "back button"
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = action) {
+                Icon(
+                    painter = actionIcon,
+                    contentDescription = contentDescription
+                )
+            }
+        },
+        modifier = modifier
+    )
+}
 
 @Preview
 @Composable
