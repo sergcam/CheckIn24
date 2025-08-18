@@ -21,8 +21,8 @@ android {
         applicationId = "dev.secam.checkin24"
         minSdk = 28
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.3.0-alpha"
+        versionCode = 4
+        versionName = "0.4.0-alpha"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.ui.tooling)
+    implementation(libs.calendar.compose)
     ksp(libs.hilt.android.compiler)
 
 
