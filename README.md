@@ -23,6 +23,15 @@ Checkin24 is a lightweight, offline alternative to the official 24go app for che
 - Small app size
 - Material You theming
 
+## Screenshots
+<p align="center">
+    <img src="meta/screenshots/screen1.png" width=400>
+    <img src="meta/screenshots/screen2.png" width=400>
+    <img src="meta/screenshots/screen3.png" width=400>
+    <img src="meta/screenshots/screen4.png" width=400>
+
+</p>
+
 ## How it works
 
 The data written in the check in qr code on the official 24go app is a JSON object in the following format: 
