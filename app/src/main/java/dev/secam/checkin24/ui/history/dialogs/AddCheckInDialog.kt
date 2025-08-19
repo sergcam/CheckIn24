@@ -35,16 +35,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import dev.secam.checkin24.R
 import dev.secam.checkin24.data.AppTheme
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
 import dev.secam.checkin24.util.SetDialogDim
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter.ofLocalizedDate
+import java.time.format.FormatStyle
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +56,6 @@ import java.util.Calendar
 fun AddCheckInDialog(
     onConfirm: (LocalDate, LocalTime) -> Unit,
     date: LocalDate,
-    dateString: String,
     onDismiss: () -> Unit
 ) {
     val currentTime = Calendar.getInstance()
@@ -78,7 +81,7 @@ fun AddCheckInDialog(
             ) {
                 Column {
                     Text(
-                        text = dateString,
+                        text = date.format(ofLocalizedDate(FormatStyle.LONG)),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         modifier = Modifier
@@ -112,7 +115,7 @@ fun AddCheckInDialog(
                         onClick = { onDismiss() },
 
                         ) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.dialog_cancel))
                     }
                     TextButton(
                         onClick = {
@@ -120,7 +123,7 @@ fun AddCheckInDialog(
                             onDismiss()
                         },
                     ) {
-                        Text("Save")
+                        Text(stringResource(R.string.dialog_save))
                     }
                 }
             }

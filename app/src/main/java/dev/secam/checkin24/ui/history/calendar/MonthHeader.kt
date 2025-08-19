@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,8 @@ import androidx.compose.ui.unit.sp
 import com.kizitonwose.calendar.core.CalendarMonth
 import dev.secam.checkin24.R
 import java.time.DayOfWeek
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () -> Unit, onNext: () -> Unit) {
@@ -62,7 +65,7 @@ fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () ->
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_chevron_left_24px),
-                    contentDescription = "month back",
+                    contentDescription = stringResource(R.string.month_back),
                 )
             }
             Text(
@@ -77,7 +80,7 @@ fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () ->
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_chevron_right_24px),
-                    contentDescription = "month forward"
+                    contentDescription = stringResource(R.string.month_forward)
                 )
             }
         }
@@ -88,9 +91,9 @@ fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () ->
                 .fillMaxWidth()
                 .padding(horizontal = 22.dp)
         ){
-            for (i in daysOfWeek) {
+            for (day in daysOfWeek) {
                 Text(
-                    text = i.name[0].toString(),
+                    text = day.getDisplayName(TextStyle.NARROW, Locale.getDefault()),
                     fontWeight = FontWeight.Medium
                 )
             }

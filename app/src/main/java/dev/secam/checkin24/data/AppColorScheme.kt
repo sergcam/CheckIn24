@@ -17,14 +17,16 @@
 
 package dev.secam.checkin24.data
 
-enum class AppColorScheme (val displayName: String){
-    Dynamic("Dynamic"),
-    Classic("Classic"),
-    Red("Red"),
-    Orange("Orange"),
-    Yellow("Yellow"),
-    Green("Green"),
-    Blue("Blue"),
-    Purple("Purple"),
+import dev.secam.checkin24.R
+
+enum class AppColorScheme (val displayNameRes: Int){
+    Dynamic(R.string.dynamic),
+    Classic(R.string.classic),
+    Red(R.string.red),
+    Orange(R.string.orange),
+    Yellow(R.string.yellow),
+    Green(R.string.green),
+    Blue(R.string.blue),
+    Purple(R.string.purple),
 
 }

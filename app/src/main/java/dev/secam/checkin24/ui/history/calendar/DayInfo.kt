@@ -33,11 +33,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.secam.checkin24.R
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter.ofLocalizedDate
+import java.time.format.DateTimeFormatter.ofLocalizedTime
+import java.time.format.FormatStyle
 
 @Composable
 fun DayInfo(
@@ -46,12 +50,6 @@ fun DayInfo(
     onDelete: (LocalDate, LocalTime) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val month = date.month.name.lowercase().replaceFirstChar {
-        if (it.isLowerCase()) it.uppercaseChar()
-        else it
-    }
-    val dayNum = date.dayOfMonth
-    val year = date.year
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -75,14 +73,14 @@ fun DayInfo(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = "$month $dayNum, $year",
+                                text = date.format(ofLocalizedDate(FormatStyle.LONG)),
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = " at "
+                                text = " ${stringResource(R.string.at)} "
                             )
                             Text(
-                                text = time.toString(),
+                                text = time.format(ofLocalizedTime(FormatStyle.SHORT)),
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -91,7 +89,7 @@ fun DayInfo(
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_delete_24px),
-                                contentDescription = "delete",
+                                contentDescription = stringResource(R.string.delete_icon),
                                 tint = MaterialTheme.colorScheme.error
                             )
                         }
@@ -110,11 +108,11 @@ fun DayInfo(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "$month $dayNum, $year",
+                        text = date.format(ofLocalizedDate(FormatStyle.LONG)),
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = " - No check in data"
+                        text = " - " + stringResource(R.string.no_data)
                     )
                 }
             }

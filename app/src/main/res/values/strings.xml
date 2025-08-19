@@ -1,6 +1,79 @@
 <resources>
-    <string name="app_name">CheckIn24</string>
-    <string name="gplv3">
+    <!--    Screen Titles    -->
+    <string name="app_name" translatable="false">CheckIn24</string>
+    <string name="history_title">History</string>
+    <string name="settings_title">Settings</string>
+    <string name="about_title">About</string>
+
+    <!--    Color Scheme Display Names  -->
+    <string name="dynamic">Dynamic</string>
+    <string name="classic">Classic</string>
+    <string name="red">Red</string>
+    <string name="orange">Orange</string>
+    <string name="yellow">Yellow</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="purple">Purple</string>
+
+    <!--    Theme Display Names     -->
+    <string name="system_theme">System</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+
+    <!--    Content Descriptions    -->
+    <string name="back_button">back button</string>
+    <string name="settings_button">settings button</string>
+    <string name="check_in_true">checked in</string>
+    <string name="check_in_false">no check in</string>
+    <string name="qr_code_icon">qr code icon</string>
+    <string name="month_back">month back</string>
+    <string name="month_forward">month forward</string>
+    <string name="delete_icon">delete check in</string>
+    <string name="more">more</string>
+    <string name="app_logo">app logo</string>
+
+
+    <!--    Dialog options      -->
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_save">Save</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_close">Close</string>
+
+    <!--    ui      -->
+    <string name="tracker_widget_header">Days Checked in this Week</string>
+    <string name="check_in_button">Check In</string>
+    <string name="check_in_history">Check In History</string>
+    <string name="greeting">Let\'s Go</string>
+    <string name="qr_sheet_header">Let\'s make today count.</string>
+    <string name="qr_sheet_subheader">One scan to check in and earn points</string>
+    <string name="qr_sheet_bottom">FitPerks points may take 24 hours to be added.</string>
+    <string name="delete_data">Delete check in data</string>
+    <string name="add_check_in">Add Check In</string>
+    <string name="at">at</string>
+    <string name="no_data">No check in data</string>
+    <string name="delete_data_warning">ALL check in data will be deleted. This can not be undone</string>
+    <string name="version">Version</string>
+    <string name="source_code">Source Code</string>
+    <string name="license">License</string>
+    <string name="author">Author</string>
+    <string name="website">Website</string>
+    <string name="email">Email</string>
+    <string name="edit_info">Edit User Info</string>
+    <string name="theme">Theme</string>
+    <string name="color_scheme">Color Scheme</string>
+    <string name="qr_on_start">QR Code on Startup</string>
+    <string name="qr_on_start_sub">Show QR code on app open</string>
+    <string name="max_bright_qr">Max Brightness QR Code</string>
+    <string name="pure_black">Pure Black Dark Theme</string>
+    <string name="use_ntp">Use Internet Time</string>
+    <string name="choose_ntp">Choose NTP Server</string>
+    <string name="ntp_label">NTP Server</string>
+    <string name="mbr_num_label">Member Number</string>
+    <string name="name_label">First Name</string>
+    <string name="optional">Optional</string>
+
+    <!--    License     -->
+    <string name="gplv3_fulltext">
         GNU GENERAL PUBLIC LICENSE \n
         Version 3, 29 June 2007\n
 \n

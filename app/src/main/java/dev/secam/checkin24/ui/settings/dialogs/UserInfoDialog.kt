@@ -31,11 +31,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.settings.SettingsViewModel
 import dev.secam.checkin24.util.SetDialogDim
 
@@ -66,7 +68,7 @@ fun UserInfoDialog(
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
                     Text(
-                        text = "Edit User Info",
+                        text = stringResource(R.string.edit_info),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -76,12 +78,16 @@ fun UserInfoDialog(
                     OutlinedTextField(
                         state = mbrIdFieldState,
                         placeholder = { Text("MBR########") },
-                        label = { Text("Member Number") },
+                        label = { Text(stringResource(R.string.mbr_num_label)) },
                         modifier = Modifier.padding(bottom = 6.dp),
                     )
                     OutlinedTextField(
                         state = nameFieldState,
-                        label = { Text("First Name (Optional)") }
+                        label = {
+                            Text(
+                                stringResource(R.string.name_label) + " (${stringResource(R.string.optional)})"
+                            )
+                        }
                     )
 
                 }
@@ -93,7 +99,7 @@ fun UserInfoDialog(
                         onClick = { onDismissRequest() },
 
                         ) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.dialog_cancel))
                     }
                     TextButton(
                         onClick = {
@@ -102,7 +108,7 @@ fun UserInfoDialog(
                             onDismissRequest()
                         },
                     ) {
-                        Text("Save")
+                        Text(stringResource(R.string.dialog_save))
                     }
                 }
             }

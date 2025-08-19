@@ -45,16 +45,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kizitonwose.calendar.core.daysOfWeek
+import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
 import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun CheckInTracker(modifier: Modifier = Modifier) {
-    val dayOfWeek = LocalDate.now().dayOfWeek.value
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
@@ -65,7 +69,7 @@ fun CheckInTracker(modifier: Modifier = Modifier) {
 
     ) {
         Text(
-            text = "Days Checked in this Week",
+            text = stringResource(R.string.tracker_widget_header),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.SemiBold,
             modifier = modifier
@@ -79,13 +83,14 @@ fun CheckInTracker(modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .padding(bottom = 10.dp)
         ) {
-            DayButton("S", dayOfWeek == 7)
-            DayButton("M", dayOfWeek == 1)
-            DayButton("T", dayOfWeek == 2)
-            DayButton("W", dayOfWeek == 3)
-            DayButton("T", dayOfWeek == 4)
-            DayButton("F", dayOfWeek == 5)
-            DayButton("S", dayOfWeek == 6)
+            val firstDayOfWeek = remember { firstDayOfWeekFromLocale() }
+            val daysOfWeek = daysOfWeek(firstDayOfWeek = firstDayOfWeek)
+            for (day in daysOfWeek){
+                DayButton(
+                    dayName =  day.getDisplayName(TextStyle.NARROW, Locale.getDefault()),
+                    day.value == LocalDate.now().dayOfWeek.value
+                )
+            }
         }
     }
 }
@@ -125,7 +130,7 @@ fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) 
         ) {
             Icon(
                 painter = if (isToggled) iconChecked else iconUnchecked,
-                contentDescription = if (isToggled) "Selected icon button" else "Unselected icon button."
+                contentDescription = if (isToggled) stringResource(R.string.check_in_true) else stringResource(R.string.check_in_false)
             )
         }
         Box(

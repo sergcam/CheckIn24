@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,9 +58,9 @@ fun HistoryScreen(
     Scaffold(
         topBar = {
             CheckInTopBar(
-                title = "History",
+                title = stringResource(R.string.history_title),
                 actionIcon = painterResource(R.drawable.ic_more_vert_24px),
-                contentDescription = "more",
+                contentDescription = stringResource(R.string.more),
                 onBack = {
                     navController.navigateUp()
                 },
@@ -73,7 +74,7 @@ fun HistoryScreen(
                 onDismissRequest = { viewModel.setMenuExpanded(false) }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Delete check in data") },
+                    text = { Text(stringResource(R.string.delete_data)) },
                     onClick = {
                         viewModel.setShowDeleteAllDialog()
                         viewModel.setMenuExpanded(false)
@@ -83,11 +84,11 @@ fun HistoryScreen(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                text = { Text("Add check in") },
+                text = { Text(stringResource(R.string.add_check_in)) },
                 icon = {
                     Icon(
                         painter = painterResource(R.drawable.ic_calendar_add_on_24px),
-                        contentDescription = "qr code icon"
+                        contentDescription = stringResource(R.string.qr_code_icon)
                     )
                 },
                 onClick = {
@@ -114,7 +115,6 @@ fun HistoryScreen(
             AddCheckInDialog(
                 onConfirm = viewModel::addCheckIn,
                 date = selectedDate,
-                dateString = viewModel.dateToText(selectedDate)
             ) { viewModel.setShowAddCheckInDialog(false) }
         }
         if(showDeleteAllDialog) {

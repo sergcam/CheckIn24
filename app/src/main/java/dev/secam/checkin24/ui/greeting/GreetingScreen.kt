@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,9 +73,9 @@ fun GreetingScreen(
     Scaffold(
         topBar = {
             CheckInTopBar(
-                title = "CheckIn24",
+                title = stringResource(R.string.app_name),
                 actionIcon = painterResource(R.drawable.ic_settings_24px),
-                contentDescription = "settings button"
+                contentDescription = stringResource(R.string.settings_button)
             ) {
                 viewModel.setQrOpened()
                 navController.navigate(CheckInScreen.Settings.name)
@@ -85,11 +86,11 @@ fun GreetingScreen(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                text = { Text("Check In") },
+                text = { Text(stringResource(R.string.check_in_button)) },
                 icon = {
                     Icon(
                         painter = painterResource(R.drawable.ic_qr_code_24px),
-                        contentDescription = "qr code icon"
+                        contentDescription = stringResource(R.string.qr_code_icon)
                     )
                 },
                 onClick = {
@@ -109,9 +110,8 @@ fun GreetingScreen(
                     .padding(top = 54.dp, bottom = 20.dp)
             )
             CheckInTracker()
-            // TODO: Implement check in tracker
             GreetingButton(
-                text = "Check In History",
+                text = stringResource(R.string.check_in_history),
                 modifier = modifier
                     .padding(top = 16.dp)
             ) {
@@ -135,7 +135,7 @@ fun GreetingScreen(
 @Composable
 fun GreetingText(firstName: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Let's Go, $firstName",
+        text = stringResource(R.string.greeting) + ", $firstName",
         fontSize = 26.sp,
         fontWeight = FontWeight.Bold,
         modifier = modifier

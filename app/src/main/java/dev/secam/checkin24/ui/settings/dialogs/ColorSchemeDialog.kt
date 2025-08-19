@@ -36,12 +36,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import dev.secam.checkin24.R
 import dev.secam.checkin24.data.AppColorScheme
 import dev.secam.checkin24.ui.settings.SettingsViewModel
 import dev.secam.checkin24.util.SetDialogDim
@@ -71,7 +73,7 @@ fun ColorSchemeDialog(
                     .selectableGroup()
             ) {
                 Text(
-                    text = "Color Scheme",
+                    text = stringResource(R.string.color_scheme),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
@@ -99,7 +101,7 @@ fun ColorSchemeDialog(
                             onClick = null // null recommended for accessibility with screen readers
                         )
                         Text(
-                            text = option.displayName,
+                            text = stringResource(option.displayNameRes),
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(start = 16.dp)
                         )

@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,7 +64,7 @@ fun AboutScreen(navController: NavHostController, modifier: Modifier = Modifier)
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About") },
+                title = { Text(stringResource(R.string.about_title)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
@@ -71,7 +72,7 @@ fun AboutScreen(navController: NavHostController, modifier: Modifier = Modifier)
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_arrow_back_24px),
-                            contentDescription = "back button"
+                            contentDescription = stringResource(R.string.back_button)
                         )
                     }
                 }
@@ -107,13 +108,13 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
         ) {
             Image(
                 painter = painterResource(R.drawable.ic_c24circle),
-                contentDescription = "app logo",
+                contentDescription = stringResource(R.string.app_logo),
                 modifier = modifier
                     .size(50.dp)
                     .padding(start = 16.dp)
             )
             Text(
-                text = "CheckIn24",
+                text = stringResource(R.string.app_name),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = modifier
@@ -123,16 +124,16 @@ fun AppInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
 
         Column {
             SettingsItem(
-                headlineContent = "Version",
+                headlineContent = stringResource(R.string.version),
                 icon = painterResource(R.drawable.ic_info_24px),
                 supportingContent = getAppVersion(LocalContext.current) ?: "null",
             )
             SettingsItem(
-                headlineContent = "Source Code",
+                headlineContent = stringResource(R.string.source_code),
                 icon = painterResource(R.drawable.ic_code_24px),
             ) { uriHandler.openUri("https://github.com/sergcam/CheckIn24") }
             SettingsItem(
-                headlineContent = "License",
+                headlineContent = stringResource(R.string.license),
                 icon = painterResource(R.drawable.ic_balance_24px),
                 supportingContent = "GPL v3",
             ) { showDialog = true }
@@ -159,7 +160,7 @@ fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 .padding(top = 8.dp)
         ) {
             Text(
-                text = "Author",
+                text = stringResource(R.string.author),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.primary,
@@ -179,12 +180,12 @@ fun AuthorInfo(uriHandler: UriHandler, modifier: Modifier = Modifier) {
                 icon = painterResource(R.drawable.ic_github_logo),
             ) { uriHandler.openUri("https://github.com/sergcam/") }
             SettingsItem(
-                headlineContent = "Website",
+                headlineContent = stringResource(R.string.website),
                 supportingContent = "secam.dev",
                 icon = painterResource(R.drawable.ic_insert_link_24px),
             ) { uriHandler.openUri("https://secam.dev") }
             SettingsItem(
-                headlineContent = "Email",
+                headlineContent = stringResource(R.string.email),
                 supportingContent = "sergio@secam.dev",
                 icon = painterResource(R.drawable.ic_mail_24px),
             ) { uriHandler.openUri("mailto:sergio@secam.dev") }

@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import dev.secam.checkin24.R
@@ -81,7 +82,7 @@ fun CheckInTopBar(title: String, modifier: Modifier = Modifier, onBack: () -> Un
             IconButton(onClick = onBack) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_back_24px),
-                    contentDescription = "back button"
+                    contentDescription = stringResource(R.string.back_button)
                 )
             }
         },
@@ -107,7 +108,7 @@ fun CheckInTopBar(title: String, actionIcon: Painter, contentDescription: String
             IconButton(onClick = onBack) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_back_24px),
-                    contentDescription = "back button"
+                    contentDescription = stringResource(R.string.back_button)
                 )
             }
         },
@@ -132,7 +133,7 @@ fun TopBarPreview(){
                 CheckInTopBar(
                     title = "CheckIn24",
                     actionIcon = painterResource(R.drawable.ic_settings_24px),
-                    contentDescription = "settings button"
+                    contentDescription = stringResource(R.string.settings_button)
                 ) {
 
                 }

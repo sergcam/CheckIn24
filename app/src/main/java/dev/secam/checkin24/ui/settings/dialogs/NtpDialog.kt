@@ -31,11 +31,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.settings.SettingsViewModel
 import dev.secam.checkin24.util.SetDialogDim
 
@@ -65,7 +67,7 @@ fun NtpDialog(
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
                     Text(
-                        text = "Edit NTP Server",
+                        text = stringResource(R.string.choose_ntp),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -74,7 +76,7 @@ fun NtpDialog(
                         )
                     OutlinedTextField(
                         state = ntpFieldState,
-                        label = { Text("NTP Server") },
+                        label = { Text(stringResource(R.string.ntp_label)) },
                         modifier = Modifier.padding(bottom = 6.dp),
                     )
 
@@ -87,7 +89,7 @@ fun NtpDialog(
                         onClick = { onDismissRequest() },
 
                         ) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.dialog_cancel))
                     }
                     TextButton(
                         onClick = {
@@ -95,7 +97,7 @@ fun NtpDialog(
                             onDismissRequest()
                         },
                     ) {
-                        Text("Save")
+                        Text(stringResource(R.string.dialog_save))
                     }
                 }
             }

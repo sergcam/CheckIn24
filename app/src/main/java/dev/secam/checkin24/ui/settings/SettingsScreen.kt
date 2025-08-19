@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import dev.secam.checkin24.R
@@ -69,7 +70,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             CheckInTopBar(
-                title = "Settings",
+                title = stringResource(R.string.settings_title),
             ) { navController.navigateUp() }
         },
         modifier = modifier
@@ -81,56 +82,56 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             SettingsItem(
-                headlineContent = "Edit User Info",
+                headlineContent = stringResource(R.string.edit_info),
                 supportingContent = mbrId,
                 icon = painterResource(R.drawable.ic_person_24px),
             ) {viewModel.setShowUserInfoDialog(true)}
 
             SettingsItem(
-                headlineContent = "Theme",
-                supportingContent = theme.displayName,
+                headlineContent = stringResource(R.string.theme),
+                supportingContent = stringResource(theme.displayNameRes),
                 icon = viewModel.getThemeIcon(theme)
             ) {viewModel.setShowThemeDialog(true)}
 
             SettingsItem(
-                headlineContent = "Color Scheme",
-                supportingContent = colorScheme.displayName,
+                headlineContent = stringResource(R.string.color_scheme),
+                supportingContent = stringResource(colorScheme.displayNameRes),
                 icon = painterResource(R.drawable.ic_palette_24px),
                 iconColor = MaterialTheme.colorScheme.primary
             ) {viewModel.setShowColorSchemeDialog(true)}
 
             ToggleSettingsItem(
-                headlineContent = "QR Code on Startup",
-                supportingContent = "Show QR code on app open",
+                headlineContent = stringResource(R.string.qr_on_start),
+                supportingContent = stringResource(R.string.qr_on_start_sub),
                 currentState = qrOnOpen,
                 onToggle = viewModel::setQrOnOpen
             )
             ToggleSettingsItem(
-                headlineContent = "Max Brightness QR Code",
+                headlineContent = stringResource(R.string.max_bright_qr),
                 currentState = qrMaxBrightness,
                 onToggle = viewModel::setQrMaxBrightness
             )
             ToggleSettingsItem(
-                headlineContent = "Pure Black Dark Theme",
+                headlineContent = stringResource(R.string.pure_black),
                 currentState = pureBlack,
                 onToggle = viewModel::setPureBlack
             )
             // TODO: implement ntp
             ToggleSettingsItem(
-                headlineContent = "Use Internet Time",
+                headlineContent = stringResource(R.string.use_ntp),
                 currentState = useNtp,
                 enabled = false,
                 onToggle = viewModel::setUseNtp,
             )
             SettingsItem(
-                headlineContent = "Choose NTP Server",
+                headlineContent = stringResource(R.string.choose_ntp),
                 supportingContent = ntpServer,
                 icon = painterResource(R.drawable.ic_access_time_24px),
                 enabled = useNtp
             ) {viewModel.setShowNtpDialog(true)}
 
             SettingsItem(
-                headlineContent = "About",
+                headlineContent = stringResource(R.string.about_title),
                 icon = painterResource(R.drawable.ic_info_24px)
             ) { navController.navigate(CheckInScreen.About.name) }
 

@@ -61,7 +61,7 @@ fun LicenseDialog(modifier: Modifier = Modifier, onDismissRequest: () -> Unit) {
                     modifier = modifier.padding(top = 20.dp)
                 ) {
                     Text(
-                        text = "License",
+                        text = stringResource(R.string.license),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -73,7 +73,7 @@ fun LicenseDialog(modifier: Modifier = Modifier, onDismissRequest: () -> Unit) {
                             .size(300.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.gplv3),
+                            text = stringResource(R.string.gplv3_fulltext),
                             modifier = modifier
                                 .verticalScroll(rememberScrollState())
                         )
@@ -86,7 +86,7 @@ fun LicenseDialog(modifier: Modifier = Modifier, onDismissRequest: () -> Unit) {
                     TextButton(
                         onClick = { onDismissRequest() }
                     ) {
-                        Text("Close")
+                        Text(stringResource(R.string.dialog_close))
                     }
                 }
             }

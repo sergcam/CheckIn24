@@ -103,16 +103,6 @@ class HistoryViewModel @Inject constructor(
             )
         }
     }
-
-    fun dateToText(date: LocalDate): String {
-        val month = date.month.name.lowercase().replaceFirstChar {
-            if (it.isLowerCase()) it.uppercaseChar()
-            else it
-        }
-        val dayNum = date.dayOfMonth
-        val year = date.year
-        return "$month $dayNum, $year"
-    }
 }
 
 data class HistoryUiState(

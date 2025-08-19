@@ -17,11 +17,10 @@
 
 package dev.secam.checkin24.data
 
-enum class AppTheme (val displayName: String) {
-    System("Follow System"),
-    Light("Light"),
-    Dark("Dark"),
+import dev.secam.checkin24.R
 
-
-
+enum class AppTheme (val displayNameRes: Int) {
+    System(R.string.system_theme),
+    Light(R.string.light_theme),
+    Dark(R.string.dark_theme),
 }
