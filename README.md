@@ -2,8 +2,15 @@
 <h1 align="center"><b>CheckIn24</b></h1>
 <h4 align="center">Offline, Material You, check in client for 24 Hour Fitness gym memberships</h4>
 <p align="center">
-    <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/sergcam/CheckIn24/total?link=https%3A%2F%2Fgithub.com%2Fsergcam%2FCheckIn24%2Freleases">
-    <img alt="Minimum SDK Version" src="https://img.shields.io/badge/API-28%2B-1450A8?style=flat">
+    <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-a503fc?logo=kotlin&logoColor=white&style=for-the-badge">
+    <img alt="Jetpack Compose" src="https://img.shields.io/static/v1?style=for-the-badge&message=Jetpack+Compose&color=4285F4&logo=Jetpack+Compose&logoColor=FFFFFF&label=">
+    <img alt="API" src="https://img.shields.io/badge/Api%2028+-50f270?logo=android&logoColor=black&style=for-the-badge"><br>
+    <img alt="GitHub Release" src="https://img.shields.io/github/v/release/sergcam/CheckIn24?color=a1168e&include_prereleases&style=for-the-badge&labelColor=700f63">
+    <img alt="GitHub License" src="https://img.shields.io/github/license/sergcam/CheckIn24?style=for-the-badge&labelColor=A6572C">
+    <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/sergcam/CheckIn24/total?link=https%3A%2F%2Fgithub.com%2Fsergcam%2FCheckIn24%2Freleases&style=for-the-badge&labelColor=97790E">
+   
+
+
 </p>
 
 ## About
