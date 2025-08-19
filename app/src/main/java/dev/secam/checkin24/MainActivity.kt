@@ -17,14 +17,17 @@
 
 package dev.secam.checkin24
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.collectAsState
 import dagger.hilt.android.AndroidEntryPoint
+import dev.secam.checkin24.data.AppTheme
 import dev.secam.checkin24.data.PreferencesRepo
 import dev.secam.checkin24.ui.CheckInApp
 import dev.secam.checkin24.ui.theme.CheckIn24Theme
@@ -45,6 +48,18 @@ class MainActivity : ComponentActivity() {
             val theme = preferencesRepo.preferencesFlow.collectAsState(null).value?.theme
             val colorScheme = preferencesRepo.preferencesFlow.collectAsState(null).value?.colorScheme
             val pureBlack = preferencesRepo.preferencesFlow.collectAsState(null).value?.pureBlack
+            when (theme) {
+                AppTheme.Dark -> enableEdgeToEdge(
+                    SystemBarStyle.dark(Color.TRANSPARENT)
+                )
+                AppTheme.Light -> enableEdgeToEdge(
+                    SystemBarStyle.light(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
+                    )
+                )
+                else -> enableEdgeToEdge()
+            }
             CheckIn24Theme(
                 appTheme = theme,
                 appColorScheme = colorScheme,
