@@ -1,4 +1,4 @@
-<p align="center"><img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" width="150"></p>
+<p align="center"><img src="meta/icons/c24.svg" width="150"></p>
 <h1 align="center"><b>CheckIn24</b></h1>
 <h4 align="center">Offline, Material You, check in client for 24 Hour Fitness gym memberships</h4>
 <p align="center">
