@@ -1,4 +1,4 @@
-<p align="center"><img src="meta/icons/c24.svg" width="150"></p>
+<p align="center"><img src="fastlane/metadata/android/en-US/images/icon.svg" width="150"></p>
 <h1 align="center"><b>CheckIn24</b></h1>
 <h4 align="center">Offline, Material You, check in client for 24 Hour Fitness gym memberships</h4>
 <p align="center">
@@ -24,10 +24,10 @@ Checkin24 is a lightweight, offline alternative to the official 24go app for che
 
 ## Screenshots
 <p align="center">
-    <img src="meta/screenshots/screen1.png" width=400>
-    <img src="meta/screenshots/screen2.png" width=400>
-    <img src="meta/screenshots/screen3.png" width=400>
-    <img src="meta/screenshots/screen4.png" width=400>
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=400>
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=400>
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=400>
+    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=400>
 
 </p>
 
