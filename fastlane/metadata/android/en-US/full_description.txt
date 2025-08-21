@@ -1,0 +1,1 @@
+Checkin24 is a lightweight, offline alternative to the official 24go app for checking into your 24 Hour Fitness gym and keeping track of your check-ins. This app can NOT get you into the gym for free. An active 24 hour fitness membership is required.
