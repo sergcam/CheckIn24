@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.kizitonwose.calendar.core.CalendarMonth
 import dev.secam.checkin24.R
 import java.time.DayOfWeek
+import java.time.Year
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -68,9 +69,15 @@ fun MonthHeader(month: CalendarMonth, daysOfWeek: List<DayOfWeek>, onPrev: () ->
                     contentDescription = stringResource(R.string.month_back),
                 )
             }
+            val headerText = month.yearMonth.month.name.lowercase().replaceFirstChar {
+                if (it.isLowerCase()) it.uppercaseChar() else it
+            }
+
             Text(
-                text = month.yearMonth.month.name.lowercase()
-                    .replaceFirstChar { if (it.isLowerCase()) it.uppercaseChar() else it },
+                text = if(month.yearMonth.year == Year.now().value) headerText
+                    else {
+                        headerText + " ${month.yearMonth.year}"
+                    },
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
