@@ -700,4 +700,5 @@ copy of the Program in return for a fee.\n\n
     <string name="welcome">Welcome</string>
     <string name="add_id">Add your member ID to get started</string>
     <string name="add_info">Add User Info</string>
+    <string name="user">User</string>
 </resources>

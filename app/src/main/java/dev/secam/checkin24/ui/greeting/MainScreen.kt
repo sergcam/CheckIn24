@@ -45,7 +45,7 @@ fun MainScreen(viewModel: GreetingViewModel,  modifier: Modifier = Modifier, onH
             .padding(horizontal = 16.dp, vertical = 0.dp)
     ) {
         GreetingText(
-            firstName = firstName,
+            firstName = if(firstName != "") firstName else stringResource(R.string.user),
             modifier = Modifier
                 .padding(top = 54.dp, bottom = 20.dp)
         )
