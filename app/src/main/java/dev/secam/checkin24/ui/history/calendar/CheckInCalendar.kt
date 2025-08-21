@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 import java.time.YearMonth
 
 @Composable
-fun CheckInCalendar(viewModel: HistoryViewModel) {
+fun CheckInCalendar(viewModel: HistoryViewModel, modifier: Modifier = Modifier) {
     // ui state
     val uiState = viewModel.uiState.collectAsState().value
     val selectedDate = uiState.selectedDate
@@ -57,8 +57,7 @@ fun CheckInCalendar(viewModel: HistoryViewModel) {
     )
 
     ElevatedCard (
-        modifier = Modifier
-            .animateContentSize()
+        modifier = modifier
     ){
         HorizontalCalendar(
             state = calendarState,
@@ -88,7 +87,9 @@ fun CheckInCalendar(viewModel: HistoryViewModel) {
                         }
                     }
                 )
-            }
+            },
+            modifier = Modifier
+                .animateContentSize()
         )
     }
 }
