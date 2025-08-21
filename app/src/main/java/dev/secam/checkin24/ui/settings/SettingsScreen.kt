@@ -117,18 +117,18 @@ fun SettingsScreen(
                 onToggle = viewModel::setPureBlack
             )
             // TODO: implement ntp
-            ToggleSettingsItem(
-                headlineContent = stringResource(R.string.use_ntp),
-                currentState = useNtp,
-                enabled = false,
-                onToggle = viewModel::setUseNtp,
-            )
-            SettingsItem(
-                headlineContent = stringResource(R.string.choose_ntp),
-                supportingContent = ntpServer,
-                icon = painterResource(R.drawable.ic_access_time_24px),
-                enabled = useNtp
-            ) {viewModel.setShowNtpDialog(true)}
+//            ToggleSettingsItem(
+//                headlineContent = stringResource(R.string.use_ntp),
+//                currentState = useNtp,
+//                enabled = false,
+//                onToggle = viewModel::setUseNtp,
+//            )
+//            SettingsItem(
+//                headlineContent = stringResource(R.string.choose_ntp),
+//                supportingContent = ntpServer,
+//                icon = painterResource(R.drawable.ic_access_time_24px),
+//                enabled = useNtp
+//            ) {viewModel.setShowNtpDialog(true)}
 
             SettingsItem(
                 headlineContent = stringResource(R.string.about_title),
