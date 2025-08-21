@@ -53,7 +53,7 @@ fun HistoryScreen(
     val expanded = uiState.menuExpanded
     val showAddCheckInDialog = uiState.showAddCheckInDialog
     val showDeleteAllDialog = uiState.showDeleteAllDialog
-    val checkInData = uiState.checkInData
+    val checkInData = viewModel.checkInData.collectAsState().value
 
     Scaffold(
         topBar = {

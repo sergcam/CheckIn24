@@ -21,11 +21,16 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.secam.checkin24.data.CheckInDao
+import dev.secam.checkin24.data.CheckInDatabase
+import dev.secam.checkin24.data.HistoryRepo
+import dev.secam.checkin24.data.HistoryRepoImpl
 import dev.secam.checkin24.data.PreferencesRepo
 import dev.secam.checkin24.data.PreferencesRepoImpl
 import javax.inject.Singleton
@@ -36,11 +41,32 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DataStoreModule {
+object AppModule {
 
     @Singleton
     @Provides
     fun providePreferencesRepo(
         @ApplicationContext context: Context
     ): PreferencesRepo = PreferencesRepoImpl(context.dataStore)
+
+    @Singleton
+    @Provides
+    fun provideCheckInDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,
+        CheckInDatabase::class.java,
+        "checkin_database"
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideCheckInDao(checkInDatabase: CheckInDatabase
+    ):CheckInDao = checkInDatabase.checkInDao()
+
+    @Provides
+    @Singleton
+    fun provideHistoryRepo(checkInDao: CheckInDao): HistoryRepo {
+        return HistoryRepoImpl(checkInDao)
+    }
 }

@@ -18,58 +18,66 @@
 package dev.secam.checkin24.ui.history
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.secam.checkin24.data.CheckInData
+import dev.secam.checkin24.data.HistoryRepo
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 
+const val TAG = "HistoryViewModel"
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    //preferencesRepo: PreferencesRepo
+    private val historyRepo: HistoryRepo
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HistoryUiState())
-//    val prefState = preferencesRepo.preferencesFlow.stateIn(
-//        scope = viewModelScope,
-//        started = SharingStarted.WhileSubscribed(5_000),
-//        initialValue = UserPreferences()
-//    )
     val uiState = _uiState.asStateFlow()
+    val checkInData = historyRepo.getAllEntriesStream().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = mapOf(),
+    )
 
     fun addCheckIn(date: LocalDate, time: LocalTime) {
-        val newList =
-            if(uiState.value.checkInData.containsKey(date)) uiState.value.checkInData[date]!!.plus(listOf(time))
-            else listOf(time)
-        _uiState.update { currentState ->
-            currentState.copy(
-                checkInData = uiState.value.checkInData + Pair(date, newList.sorted())
-            )
+        val data = checkInData.value
+        if(data.containsKey(date)) {
+            if(!data[date]!!.contains(time)){
+                val newList = data[date]!!.plus(listOf(time))
+                viewModelScope.launch {
+                    historyRepo.updateEntry(CheckInData(date,newList.sorted()))
+                }
+            }
+        } else {
+            viewModelScope.launch {
+                historyRepo.insertEntry(CheckInData(date,listOf(time)))
+            }
         }
     }
 
     fun removeCheckIn(date: LocalDate, time: LocalTime) {
-        if (uiState.value.checkInData.containsKey(date)){
-            val newMap =
-                if (uiState.value.checkInData[date]?.size == 1) uiState.value.checkInData - date
-                else uiState.value.checkInData + Pair(
-                    date,
-                    uiState.value.checkInData[date]!! - time
-                )
-            _uiState.update { currentState ->
-                currentState.copy(
-                    checkInData = newMap
-                )
+        val data = checkInData.value[date]
+        if(data!!.size > 1) {
+            val newList = data.minus(listOf(time))
+            viewModelScope.launch {
+                historyRepo.updateEntry(CheckInData(date,newList))
+            }
+        } else {
+            viewModelScope.launch {
+                historyRepo.deleteEntry(date)
             }
         }
     }
 
     fun clearCheckInData() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                checkInData = mapOf()
-            )
+        viewModelScope.launch {
+            historyRepo.deleteAll()
         }
     }
 
@@ -106,7 +114,6 @@ class HistoryViewModel @Inject constructor(
 }
 
 data class HistoryUiState(
-    val checkInData: Map<LocalDate, List<LocalTime>> = mapOf(),
     val selectedDate: LocalDate = LocalDate.now(),
     val menuExpanded: Boolean = false,
     val showAddCheckInDialog: Boolean = false,

@@ -17,11 +17,13 @@
 
 package dev.secam.checkin24.ui.history.calendar
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.DayPosition
@@ -38,7 +40,7 @@ fun CheckInCalendar(viewModel: HistoryViewModel) {
     // ui state
     val uiState = viewModel.uiState.collectAsState().value
     val selectedDate = uiState.selectedDate
-    val checkInData = uiState.checkInData
+    val checkInData = viewModel.checkInData.collectAsState().value
 
     // calendar
     val scope = rememberCoroutineScope()
@@ -54,7 +56,10 @@ fun CheckInCalendar(viewModel: HistoryViewModel) {
         firstDayOfWeek = firstDayOfWeek,
     )
 
-    ElevatedCard {
+    ElevatedCard (
+        modifier = Modifier
+            .animateContentSize()
+    ){
         HorizontalCalendar(
             state = calendarState,
             dayContent = {

@@ -75,5 +75,10 @@ dependencies {
     implementation(libs.calendar.compose)
     ksp(libs.hilt.android.compiler)
 
+    //Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
 
 }

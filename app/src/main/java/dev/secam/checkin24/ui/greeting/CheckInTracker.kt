@@ -37,10 +37,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,7 +55,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun CheckInTracker(modifier: Modifier = Modifier) {
+fun CheckInTracker(modifier: Modifier = Modifier, checkIns: List<Boolean>) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
@@ -85,19 +82,22 @@ fun CheckInTracker(modifier: Modifier = Modifier) {
         ) {
             val firstDayOfWeek = remember { firstDayOfWeekFromLocale() }
             val daysOfWeek = daysOfWeek(firstDayOfWeek = firstDayOfWeek)
+            var i = 0
             for (day in daysOfWeek){
                 DayButton(
+                    checkedIn = checkIns[i],
                     dayName =  day.getDisplayName(TextStyle.NARROW, Locale.getDefault()),
-                    day.value == LocalDate.now().dayOfWeek.value
+                    isToday =  day.value == LocalDate.now().dayOfWeek.value,
                 )
+                i++
             }
         }
     }
 }
 
 @Composable
-fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) {
-    var isToggled by remember { mutableStateOf(false) }
+fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier, checkedIn: Boolean) {
+    val isToggled = checkedIn
     val iconChecked = painterResource(R.drawable.ic_check_24px)
     val iconUnchecked = painterResource(R.drawable.ic_close_24px)
     val buttonContentPadding = PaddingValues(0.dp)
@@ -106,21 +106,22 @@ fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) 
     val buttonColorChecked = ButtonColors(
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary,
-        disabledContainerColor = Color.White,
-        disabledContentColor = Color.White
+        disabledContainerColor = MaterialTheme.colorScheme.primary,
+        disabledContentColor = MaterialTheme.colorScheme.onPrimary,
     )
     val buttonColorUnchecked = ButtonColors(
         containerColor = MaterialTheme.colorScheme.inversePrimary,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        disabledContainerColor = Color.White,
-        disabledContentColor = Color.White
+        disabledContainerColor = MaterialTheme.colorScheme.inversePrimary,
+        disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     )
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = { isToggled = !isToggled },
+            enabled = false,
+            onClick = { },
             contentPadding = buttonContentPadding,
             colors = if (isToggled) buttonColorChecked else buttonColorUnchecked,
             modifier = modifier
@@ -155,6 +156,6 @@ fun DayButton(dayName: String, isToday: Boolean, modifier: Modifier = Modifier) 
 @Composable
 fun TrackerPreview(){
     CheckIn24Theme {
-        CheckInTracker()
+//        CheckInTracker()
     }
 }
