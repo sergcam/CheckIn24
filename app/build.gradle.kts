@@ -21,8 +21,8 @@ android {
         applicationId = "dev.secam.checkin24"
         minSdk = 28
         targetSdk = 36
-        versionCode = 4
-        versionName = "0.4.0-alpha"
+        versionCode = 5
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
