@@ -17,7 +17,11 @@
 
 package dev.secam.checkin24.ui.greeting
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,15 +30,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +45,10 @@ import androidx.navigation.NavHostController
 import dev.secam.checkin24.R
 import dev.secam.checkin24.ui.CheckInScreen
 import dev.secam.checkin24.ui.components.CheckInTopBar
+import dev.secam.checkin24.ui.settings.dialogs.UserInfoDialog
+import java.time.LocalDate
+import java.time.LocalTime
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,13 +57,12 @@ fun GreetingScreen(
     modifier: Modifier = Modifier,
     viewModel: GreetingViewModel = hiltViewModel(),
 ) {
-    val uriHandler = LocalUriHandler.current
-    val snackbarHostState = remember { SnackbarHostState() }
-
     // ui state
     val uiState = viewModel.uiState.collectAsState().value
     val qrOpened = uiState.qrOpened
     val showBottomSheet = uiState.showBottomSheet
+    val showUserInfoDialog = uiState.showUserInfoDialog
+    val actionButtonVisible = uiState.actionButtonVisible
 
     // user preferences
     val prefs = viewModel.prefState.collectAsState().value
@@ -68,8 +71,14 @@ fun GreetingScreen(
     val qrOnOpen = prefs.qrOnOpen
     val qrMaxBrightness = prefs.qrMaxBrightness
 
-    if (qrOnOpen && !qrOpened) viewModel.setShowBottomSheet(true)
+    when {
+        (mbrId == "") -> viewModel.setActionButtonVisible(false)
+        (showBottomSheet) -> viewModel.setActionButtonVisible(false)
+        else -> viewModel.setActionButtonVisible(true)
+    }
 
+
+    if (qrOnOpen && !qrOpened) viewModel.setShowBottomSheet(true)
     Scaffold(
         topBar = {
             CheckInTopBar(
@@ -81,53 +90,57 @@ fun GreetingScreen(
                 navController.navigate(CheckInScreen.Settings.name)
             }
         },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text(stringResource(R.string.check_in_button)) },
-                icon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_qr_code_24px),
-                        contentDescription = stringResource(R.string.qr_code_icon)
-                    )
-                },
-                onClick = {
-                    viewModel.setShowBottomSheet(true)
-                }
-            )
+            AnimatedVisibility(
+                visible = actionButtonVisible,
+                enter =  scaleIn() + fadeIn(
+                    // Fade in with the initial alpha of 0.3f.
+                    initialAlpha = 0.3f
+                ),
+                exit = scaleOut() + fadeOut()
+            ) {
+                ExtendedFloatingActionButton(
+                    text = { Text(stringResource(R.string.check_in_button)) },
+                    icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_qr_code_24px),
+                            contentDescription = stringResource(R.string.qr_code_icon)
+                        )
+                    },
+                    onClick = {
+                        viewModel.setShowBottomSheet(true)
+                        viewModel.addCheckIn(LocalDate.now(), LocalTime.now())
+                    }
+                )
+            }
+
         }
     ) { contentPadding ->
-        Column(
-            modifier = modifier
-                .padding(contentPadding)
-                .padding(horizontal = 16.dp, vertical = 0.dp)
-        ) {
-            GreetingText(
-                firstName = firstName,
+        if(mbrId == ""){
+            InitialScreen(
                 modifier = modifier
-                    .padding(top = 54.dp, bottom = 20.dp)
-            )
-            CheckInTracker()
-            GreetingButton(
-                text = stringResource(R.string.check_in_history),
+                    .padding(contentPadding)
+            ) { viewModel.setShowUserInfoDialog(true)}
+        } else {
+            MainScreen(
+                viewModel = viewModel,
                 modifier = modifier
-                    .padding(top = 16.dp)
-            ) {
-                navController.navigate(CheckInScreen.History.name)
-            }
-            GreetingButton(
-                text = "Manage Account",
-                icon = painterResource(R.drawable.ic_open_in_new_24px),
-                iconDesc = null,
-                modifier = modifier
-                    .padding(top = 16.dp)
-            ) { uriHandler.openUri("https://www.24hourfitness.com/login.html") }
+                    .padding(contentPadding)
+            ) { navController.navigate(CheckInScreen.History.name) }
         }
         if (showBottomSheet) {
             viewModel.setQrOpened()
-            QrScreen(mbrId, qrMaxBrightness) { viewModel.setShowBottomSheet(false) }
+            QrScreen(mbrId, qrMaxBrightness) {
+                viewModel.setShowBottomSheet(false)
+            }
+        }
+        if (showUserInfoDialog) {
+            UserInfoDialog(
+                mbrId = mbrId,
+                firstName = firstName,
+                updateId = viewModel::setMbrId,
+                updateName = viewModel::setFirstName
+            ) {viewModel.setShowUserInfoDialog(false)}
         }
     }
 }
@@ -150,7 +163,8 @@ fun GreetingButton(text: String, modifier: Modifier = Modifier, onClick: () -> U
             .fillMaxWidth()
     ) {
         Text(
-            text = text
+            text = text,
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -170,6 +184,7 @@ fun GreetingButton(
     ) {
         Text(
             text = text,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(end = 4.dp)
         )

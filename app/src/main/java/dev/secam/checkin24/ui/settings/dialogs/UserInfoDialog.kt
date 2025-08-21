@@ -38,14 +38,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.secam.checkin24.R
-import dev.secam.checkin24.ui.settings.SettingsViewModel
 import dev.secam.checkin24.util.SetDialogDim
 
 @Composable
 fun UserInfoDialog(
     mbrId: String,
     firstName: String = "",
-    viewModel: SettingsViewModel,
+    updateId: (String) -> Unit,
+    updateName: (String) -> Unit,
     onDismissRequest: () -> Unit
 ) {
     val mbrIdFieldState = rememberTextFieldState(mbrId)
@@ -103,8 +103,8 @@ fun UserInfoDialog(
                     }
                     TextButton(
                         onClick = {
-                            viewModel.setMbrId(mbrIdFieldState.text as String)
-                            viewModel.setFirstName(nameFieldState.text as String)
+                            updateId(mbrIdFieldState.text as String)
+                            updateName(nameFieldState.text as String)
                             onDismissRequest()
                         },
                     ) {

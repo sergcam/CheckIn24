@@ -140,7 +140,8 @@ fun SettingsScreen(
                 UserInfoDialog(
                     mbrId = mbrId,
                     firstName = firstName,
-                    viewModel = viewModel
+                    updateId = viewModel::setMbrId,
+                    updateName = viewModel::setFirstName
                 ) { viewModel.setShowUserInfoDialog(false) }
             }
             if(showThemeDialog) {
