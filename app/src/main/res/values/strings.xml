@@ -32,7 +32,6 @@
     <string name="more">more</string>
     <string name="app_logo">app logo</string>
 
-
     <!--    Dialog options      -->
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_save">Save</string>
@@ -71,9 +70,14 @@
     <string name="mbr_num_label">Member Number</string>
     <string name="name_label">First Name</string>
     <string name="optional">Optional</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="welcome">Welcome</string>
+    <string name="add_id">Add your member ID to get started</string>
+    <string name="add_info">Add User Info</string>
+    <string name="user">User</string>
 
     <!--    License     -->
-    <string name="gplv3_fulltext">
+    <string name="gplv3_fulltext" translatable="false">
         GNU GENERAL PUBLIC LICENSE \n
         Version 3, 29 June 2007\n
 \n
@@ -696,9 +700,5 @@ copy of the Program in return for a fee.\n\n
 
                      END OF TERMS AND CONDITIONS
     </string>
-    <string name="manage_account">Manage Account</string>
-    <string name="welcome">Welcome</string>
-    <string name="add_id">Add your member ID to get started</string>
-    <string name="add_info">Add User Info</string>
-    <string name="user">User</string>
+
 </resources>
