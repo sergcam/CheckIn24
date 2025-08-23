@@ -59,6 +59,20 @@ fun CheckInCalendar(viewModel: HistoryViewModel, modifier: Modifier = Modifier) 
     ElevatedCard (
         modifier = modifier
     ){
+        CalendarTitle(
+            currentMonth = calendarState.firstVisibleMonth.yearMonth,
+            isHorizontal = true,
+            goToPrevious = {
+                scope.launch {
+                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.previousMonth)
+                }
+            },
+            goToNext = {
+                scope.launch {
+                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.nextMonth)
+                }
+            }
+        )
         HorizontalCalendar(
             state = calendarState,
             dayContent = {
@@ -74,19 +88,7 @@ fun CheckInCalendar(viewModel: HistoryViewModel, modifier: Modifier = Modifier) 
                 }
             },
             monthHeader = {
-                MonthHeader(
-                    it, daysOfWeek,
-                    onPrev = {
-                        scope.launch {
-                            calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.previousMonth)
-                        }
-                    },
-                    onNext = {
-                        scope.launch {
-                            calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.nextMonth)
-                        }
-                    }
-                )
+                MonthHeader(daysOfWeek)
             },
             modifier = Modifier
                 .animateContentSize()
