@@ -32,6 +32,7 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
 import dev.secam.checkin24.ui.history.HistoryViewModel
+import dev.secam.checkin24.util.rememberFirstMostVisibleMonth
 import kotlinx.coroutines.launch
 import java.time.YearMonth
 
@@ -55,12 +56,13 @@ fun CheckInCalendar(viewModel: HistoryViewModel, modifier: Modifier = Modifier) 
         firstVisibleMonth = currentMonth,
         firstDayOfWeek = firstDayOfWeek,
     )
+    val visibleMonth = rememberFirstMostVisibleMonth(calendarState)
 
     ElevatedCard (
         modifier = modifier
     ){
         CalendarTitle(
-            currentMonth = calendarState.firstVisibleMonth.yearMonth,
+            currentMonth = visibleMonth.yearMonth,
             isHorizontal = true,
             goToPrevious = {
                 scope.launch {
